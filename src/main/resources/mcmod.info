@@ -1,0 +1,16 @@
+[
+{
+  "modid": "cct",
+  "name": "Custom Crafting Tables",
+  "description": "Crafting tables with a range of x*y scales, Use with CraftTweaker integration",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["sokratis12GR", "KewaiiGamer", "TheDragonTeam"],
+  "credits": "",
+  "logoFile": "https://sokratis12gr.com/uploads/faD3jsJ4.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

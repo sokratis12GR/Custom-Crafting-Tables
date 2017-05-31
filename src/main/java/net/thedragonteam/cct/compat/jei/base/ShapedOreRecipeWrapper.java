@@ -1,0 +1,53 @@
+package net.thedragonteam.cct.compat.jei.base;
+
+import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.thedragonteam.cct.compat.jei.JEIUtils;
+
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+
+public class ShapedOreRecipeWrapper extends BlankRecipeWrapper implements IShapedCraftingRecipeWrapper {
+
+    private final IJeiHelpers jeiHelpers;
+    private final IRecipe recipe;
+    private final Object[] inputItems;
+    private final int width;
+    private final int height;
+
+    public ShapedOreRecipeWrapper(IJeiHelpers jeiHelpers, IRecipe recipe, Object[] inputItems, int width, int height) {
+        this.jeiHelpers = jeiHelpers;
+        this.recipe = recipe;
+        this.inputItems = inputItems;
+        this.width = width;
+        this.height = height;
+        for (Object input : inputItems) {
+            if (input instanceof ItemStack) {
+                ItemStack itemStack = (ItemStack) input;
+                if (!itemStack.isEmpty() && itemStack.getCount() != 1) {
+                    itemStack.setCount(1);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void getIngredients(@Nonnull IIngredients ingredients) {
+        JEIUtils.getIngredients(ingredients, recipe, jeiHelpers, Arrays.asList(inputItems));
+    }
+
+    @Override
+    public int getWidth() {
+        return this.width;
+    }
+
+    @Override
+    public int getHeight() {
+        return this.height;
+    }
+
+}

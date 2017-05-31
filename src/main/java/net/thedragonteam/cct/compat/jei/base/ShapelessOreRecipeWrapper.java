@@ -1,0 +1,38 @@
+package net.thedragonteam.cct.compat.jei.base;
+
+import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.thedragonteam.cct.compat.jei.JEIUtils;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+
+public class ShapelessOreRecipeWrapper extends BlankRecipeWrapper implements IRecipeWrapper {
+
+    private final IJeiHelpers jeiHelpers;
+    private final IRecipe recipe;
+    private final List inputItems;
+
+    public ShapelessOreRecipeWrapper(IJeiHelpers jeiHelpers, IRecipe recipe, List inputItems) {
+        this.jeiHelpers = jeiHelpers;
+        this.recipe = recipe;
+        this.inputItems = inputItems;
+        for (Object input : inputItems) {
+            if (input instanceof ItemStack) {
+                ItemStack itemStack = (ItemStack) input;
+                if (!itemStack.isEmpty() && itemStack.getCount() != 1) {
+                    itemStack.setCount(1);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void getIngredients(@Nonnull IIngredients ingredients) {
+        JEIUtils.getIngredients(ingredients, recipe, jeiHelpers, inputItems);
+    }
+}
