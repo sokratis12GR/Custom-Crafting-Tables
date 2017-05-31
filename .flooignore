@@ -1,0 +1,25 @@
+extern
+node_modules
+tmp
+vendor
+.idea/workspace.xml
+.idea/misc.xml
+
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# other
+eclipse
+run
