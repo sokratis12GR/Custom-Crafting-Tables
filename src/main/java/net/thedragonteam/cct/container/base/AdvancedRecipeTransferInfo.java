@@ -6,6 +6,8 @@ import net.minecraft.inventory.Slot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AdvancedRecipeTransferInfo<C extends Container> implements IRecipeTransferInfo<C> {
     private final Class<C> containerClass;
@@ -47,25 +49,17 @@ public class AdvancedRecipeTransferInfo<C extends Container> implements IRecipeT
 
     @Override
     public List<Slot> getRecipeSlots(C container) {
-        ArrayList<Slot> list = new ArrayList<>();
+        ArrayList<Slot> list;
         int bound = recipeSlotStart + recipeSlotCount;
-        for (int i = recipeSlotStart; i < bound; i++) {
-            Slot slot = container.getSlot(i);
-            list.add(slot);
-        }
+        list = IntStream.range(recipeSlotStart, bound).mapToObj(container::getSlot).collect(Collectors.toCollection(ArrayList::new));
         return list;
     }
 
     @Override
     public ArrayList<Slot> getInventorySlots(C container) {
-        ArrayList<Slot> list = new ArrayList<>();
+        ArrayList<Slot> list;
         int bound = inventorySlotStart + inventorySlotCount + additionalSlots;
-        for (int i = inventorySlotStart; i < bound; i++) {
-            if (i < container.inventorySlots.size()) {
-                Slot slot = container.getSlot(i);
-                list.add(slot);
-            }
-        }
+        list = IntStream.range(inventorySlotStart, bound).filter(i -> i < container.inventorySlots.size()).mapToObj(container::getSlot).collect(Collectors.toCollection(ArrayList::new));
         return list;
     }
 }
