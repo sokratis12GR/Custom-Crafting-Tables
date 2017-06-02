@@ -5,7 +5,6 @@
 package net.thedragonteam.cct.client.gui;
 
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.thedragonteam.cct.client.gui.base.GuiBaseBench;
 import net.thedragonteam.cct.container.ContainerNineByNine;
@@ -14,7 +13,6 @@ import net.thedragonteam.cct.tileentity.TileEntityNineByNine;
 import java.util.Objects;
 
 import static net.thedragonteam.cct.CCTConfig.cctGuiNames;
-import static net.thedragonteam.cct.util.Utils.setRL;
 
 /**
  * net.thedragonteam.armorplus.client.gui
@@ -22,12 +20,10 @@ import static net.thedragonteam.cct.util.Utils.setRL;
  * - TheDragonTeam
  */
 public class GuiNineByNine extends GuiBaseBench {
-    private static final ResourceLocation NINE_BY_NINE_GUI_TEXTURES = setRL("textures/gui/container/gui_9x9.png");
 
     public GuiNineByNine(InventoryPlayer playerInv, TileEntityNineByNine tile) {
-        super(new ContainerNineByNine(playerInv, tile), NINE_BY_NINE_GUI_TEXTURES, "9x9", 256, 256, 8);
+        super(new ContainerNineByNine(playerInv, tile),"9x9", 256, 256, 8);
     }
-
 
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)

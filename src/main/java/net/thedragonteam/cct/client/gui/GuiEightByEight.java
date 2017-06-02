@@ -5,12 +5,9 @@
 package net.thedragonteam.cct.client.gui;
 
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.thedragonteam.cct.client.gui.base.GuiBaseBench;
 import net.thedragonteam.cct.container.ContainerEightByEight;
 import net.thedragonteam.cct.tileentity.TileEntityEightByEight;
-
-import static net.thedragonteam.cct.util.Utils.setRL;
 
 /**
  * net.thedragonteam.armorplus.client.gui
@@ -18,9 +15,8 @@ import static net.thedragonteam.cct.util.Utils.setRL;
  * - TheDragonTeam
  */
 public class GuiEightByEight extends GuiBaseBench {
-    private static final ResourceLocation EIGHT_BY_EIGHT_GUI_TEXTURES = setRL("textures/gui/container/gui_8x8.png");
 
     public GuiEightByEight(InventoryPlayer playerInv, TileEntityEightByEight tile) {
-        super(new ContainerEightByEight(playerInv, tile), EIGHT_BY_EIGHT_GUI_TEXTURES, "8x8", 215, 255, 7);
+        super(new ContainerEightByEight(playerInv, tile), "8x8", 215, 255, 7);
     }
 }

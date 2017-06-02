@@ -5,7 +5,6 @@
 package net.thedragonteam.cct.client.gui;
 
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.thedragonteam.cct.client.gui.base.GuiBaseBench;
 import net.thedragonteam.cct.container.ContainerTenByTen;
@@ -14,13 +13,11 @@ import net.thedragonteam.cct.tileentity.TileEntityTenByTen;
 import java.util.Objects;
 
 import static net.thedragonteam.cct.CCTConfig.cctGuiNames;
-import static net.thedragonteam.cct.util.Utils.setRL;
 
 public class GuiTenByTen extends GuiBaseBench {
-    private static final ResourceLocation TEN_BY_TEN_GUI_TEXTURES = setRL("textures/gui/container/gui_10x10.png");
 
     public GuiTenByTen(InventoryPlayer playerInv, TileEntityTenByTen tile) {
-        super(new ContainerTenByTen(playerInv, tile), TEN_BY_TEN_GUI_TEXTURES, "10x10", 256, 256, 9);
+        super(new ContainerTenByTen(playerInv, tile),"10x10", 256, 256, 9);
     }
 
     /**
