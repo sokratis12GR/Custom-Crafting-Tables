@@ -2,11 +2,17 @@ package net.thedragonteam.cct.blocks;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.text.TextFormatting;
 import net.thedragonteam.cct.tileentity.*;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
-import static net.thedragonteam.cct.CCTConfig.cctNames;
+import static java.lang.String.format;
+import static net.minecraft.util.text.TextFormatting.WHITE;
+import static net.minecraft.util.text.TextFormatting.getValueByName;
+import static net.thedragonteam.cct.CCTConfig.*;
+import static net.thedragonteam.thedragonlib.util.LogHelper.INSTANCE;
 
 public enum EnumCCT implements IStringSerializable {
     CCT_1X1("cct_1x1", 0, new TileEntityOneByOne()),
@@ -53,7 +59,35 @@ public enum EnumCCT implements IStringSerializable {
     }
 
     public String getDisplayName() {
-        return cctNames[this.getBlockNumber()];
+        if (this.getBlockNumber() < cctNames.length) {
+            return cctNames[this.getBlockNumber()];
+        }
+        return "Not enough array members for the cctNames array";
     }
 
+    public String getDisplayName(String alternative) {
+        String displayName = getDisplayName();
+        if (displayName != null && !Objects.equals(displayName, "") && !Objects.equals(displayName, " ")) {
+            return displayName;
+        }
+        if (enableDebug) {
+            INSTANCE.info(format("The name \"%s\" for the block is invalid", displayName));
+        }
+        return alternative;
+    }
+
+    public TextFormatting getColor() {
+        if (this.getBlockNumber() < recolorCCTNames.length) {
+            String colorName = recolorCCTNames[this.getBlockNumber()];
+            return getValueByName(colorName);
+        }
+        return WHITE;
+    }
+
+    public int getStackSize() {
+        if (this.getBlockNumber() < cctMaxStackSize.length) {
+            return cctMaxStackSize[this.getBlockNumber()];
+        }
+        return 64;
+    }
 }

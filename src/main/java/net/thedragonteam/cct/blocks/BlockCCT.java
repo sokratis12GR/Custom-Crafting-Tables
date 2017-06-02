@@ -4,23 +4,20 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.thedragonteam.cct.blocks.base.BaseBlock;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import java.util.Objects;
-
+import static net.minecraftforge.common.util.EnumHelper.addRarity;
 import static net.thedragonteam.cct.CustomCraftingTables.MODID;
+import static net.thedragonteam.cct.util.Utils.getFormatted;
 
 public class BlockCCT extends BaseBlock implements ITileEntityProvider {
     private EnumCCT cct;
@@ -32,7 +29,17 @@ public class BlockCCT extends BaseBlock implements ITileEntityProvider {
         GameRegistry.register(new ItemBlock(this) {
             @Override
             public String getItemStackDisplayName(ItemStack stack) {
-                return cctIn.getDisplayName() != null && !Objects.equals(cctIn.getDisplayName(), "") && !Objects.equals(cctIn.getDisplayName(), " ") ? cctIn.getDisplayName() : new TextComponentTranslation(this.getUnlocalizedNameInefficiently(stack) + ".name").getFormattedText();
+                return cctIn.getDisplayName(getFormatted(this.getUnlocalizedNameInefficiently(stack) + ".name"));
+            }
+
+            @Override
+            public EnumRarity getRarity(ItemStack stack) {
+                return addRarity(cctIn.getName().toUpperCase(), cctIn.getColor(), cctIn.getDisplayName());
+            }
+
+            @Override
+            public int getItemStackLimit(ItemStack stack) {
+                return cctIn.getStackSize();
             }
         }, getRegistryName());
     }
@@ -45,9 +52,8 @@ public class BlockCCT extends BaseBlock implements ITileEntityProvider {
         return true;
     }
 
-    @Nullable
     @Override
-    public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return cct.getTileEntity();
     }
 }
