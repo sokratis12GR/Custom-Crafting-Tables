@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.thedragonteam.cct.compat.jei.JEIUtils;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ShapelessOreRecipeWrapper extends BlankRecipeWrapper implements IRecipeWrapper {
@@ -32,7 +31,7 @@ public class ShapelessOreRecipeWrapper extends BlankRecipeWrapper implements IRe
     }
 
     @Override
-    public void getIngredients(@Nonnull IIngredients ingredients) {
+    public void getIngredients(IIngredients ingredients) {
         JEIUtils.getIngredients(ingredients, recipe, jeiHelpers, inputItems);
     }
 }

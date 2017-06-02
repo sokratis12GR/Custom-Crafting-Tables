@@ -2,7 +2,7 @@
  * Copyright (c) TheDragonTeam 2016-2017.
  */
 
-package net.thedragonteam.cct.compat.jei.categories;
+package net.thedragonteam.cct.compat.jei.base;
 
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -18,31 +18,39 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
+import static java.lang.String.format;
 import static net.thedragonteam.cct.CCTConfig.cctJEINames;
 import static net.thedragonteam.cct.util.Utils.getFormatted;
 import static net.thedragonteam.cct.util.Utils.setRL;
 
-public class SixBySixCategory extends BlankRecipeCategory<IRecipeWrapper> {
+public class CategoryBase extends BlankRecipeCategory<IRecipeWrapper> {
 
-    public static final int width = 156;
-    public static final int height = 108;
     private static final int OUTPUT_SLOT = 0;
     private static final int INPUT_SLOT = 1;
     private final IDrawable background;
     private final String localizedName;
     private final ICraftingGridHelper craftingGridHelper;
+    private final int xPos;
+    private final int yPos;
+    private final int xy;
+    private final String category;
 
-    public SixBySixCategory() {
-        ResourceLocation location = setRL("textures/gui/container/gui_6x6.png");
-        background = CCTPlugin.jeiHelper.getGuiHelper().createDrawable(location, 11, 16, width, height);
-        localizedName = cctJEINames[5] != null && !Objects.equals(cctJEINames[5], "") && !Objects.equals(cctJEINames[5], " ") ? cctJEINames[5] : getFormatted("gui.jei.category.6x6");
+    public CategoryBase(int u, int v, int widthU, int heightV, int outputXPos, int outputYPos, int xy, String category) {
+        this.xPos = outputXPos;
+        this.yPos = outputYPos;
+        this.xy = xy;
+        this.category = category;
+        ResourceLocation location = setRL(format("textures/gui/container/gui_%sx%s.png", xy, xy));
+        background = CCTPlugin.jeiHelper.getGuiHelper().createDrawable(location, u, v, widthU, heightV);
+        localizedName = cctJEINames[xy - 1] != null && !Objects.equals(cctJEINames[xy - 1], "") &&
+                !Objects.equals(cctJEINames[xy - 1], " ") ? cctJEINames[xy - 1] : getFormatted(String.format("gui.jei.category.%sx%s", xy, xy));
         craftingGridHelper = CCTPlugin.jeiHelper.getGuiHelper().createCraftingGridHelper(INPUT_SLOT, OUTPUT_SLOT);
     }
 
     @Nonnull
     @Override
     public String getUid() {
-        return CCTPlugin.JEI_CATEGORY_6X6;
+        return category;
     }
 
     @Nonnull
@@ -65,6 +73,6 @@ public class SixBySixCategory extends BlankRecipeCategory<IRecipeWrapper> {
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper, @Nonnull IIngredients ingredients) {
-        JEIUtils.setRecipe(recipeLayout, recipeWrapper, ingredients, craftingGridHelper, 138, 46, 6, 6, INPUT_SLOT, OUTPUT_SLOT);
+        JEIUtils.setRecipe(recipeLayout, recipeWrapper, ingredients, craftingGridHelper, xPos, yPos, xy, xy, INPUT_SLOT, OUTPUT_SLOT);
     }
 }

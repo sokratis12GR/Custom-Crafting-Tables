@@ -31,8 +31,7 @@ public class MTCCTPlugin {
     }
 
     public static Object[] toTwoByTwoObjects(IIngredient[][] ingredients) {
-        if (ingredients == null)
-            return null;
+        if (ingredients == null) return null;
         ArrayList<Object> prep = new ArrayList<>();
         prep.add("ab");
         prep.add("cd");
@@ -45,8 +44,7 @@ public class MTCCTPlugin {
     }
 
     public static Object[] toThreeByThreeObjects(IIngredient[][] ingredients) {
-        if (ingredients == null)
-            return null;
+        if (ingredients == null) return null;
         ArrayList<Object> prep = new ArrayList<>();
         prep.add("abc");
         prep.add("def");
@@ -61,8 +59,7 @@ public class MTCCTPlugin {
     }
 
     public static Object[] toFourByFourShapedObjects(IIngredient[][] ingredients) {
-        if (ingredients == null)
-            return null;
+        if (ingredients == null) return null;
         ArrayList<Object> prep = new ArrayList<>();
         prep.add("abcd");
         prep.add("efgh");
@@ -78,10 +75,8 @@ public class MTCCTPlugin {
         return prep.toArray();
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
     public static Object[] toFiveByFiveShapedObjects(IIngredient[][] ingredients) {
-        if (ingredients == null)
-            return null;
+        if (ingredients == null) return null;
         ArrayList<Object> prep = new ArrayList<>();
         prep.add("abcde");
         prep.add("fghij");
@@ -100,8 +95,7 @@ public class MTCCTPlugin {
     }
 
     public static Object[] toSixBySixShapedObjects(IIngredient[][] ingredients) {
-        if (ingredients == null)
-            return null;
+        if (ingredients == null) return null;
         ArrayList<Object> prep = new ArrayList<>();
         prep.add("abcdef");
         prep.add("ghijkl");
@@ -122,8 +116,7 @@ public class MTCCTPlugin {
     }
 
     public static Object[] toSevenBySevenObjects(IIngredient[][] ingredients) {
-        if (ingredients == null)
-            return null;
+        if (ingredients == null) return null;
         ArrayList<Object> prep = new ArrayList<>();
         prep.add("abcdefg");
         prep.add("hijklmn");
@@ -146,8 +139,7 @@ public class MTCCTPlugin {
     }
 
     public static Object[] toEightByEightObjects(IIngredient[][] ingredients) {
-        if (ingredients == null)
-            return null;
+        if (ingredients == null) return null;
         ArrayList<Object> prep = new ArrayList<>();
         prep.add("abcdefgh");
         prep.add("ijklmnop");
@@ -172,8 +164,7 @@ public class MTCCTPlugin {
     }
 
     public static Object[] toNineByNineObjects(IIngredient[][] ingredients) {
-        if (ingredients == null)
-            return null;
+        if (ingredients == null) return null;
         ArrayList<Object> prep = new ArrayList<>();
         prep.add("abcdefghi");
         prep.add("jklmnopqr");
@@ -200,8 +191,7 @@ public class MTCCTPlugin {
     }
 
     public static Object[] toTenByTenObjects(IIngredient[][] ingredients) {
-        if (ingredients == null)
-            return null;
+        if (ingredients == null) return null;
         ArrayList<Object> prep = new ArrayList<>();
         prep.add("abcdefghij");
         prep.add("klmnopqrst");
@@ -245,14 +235,13 @@ public class MTCCTPlugin {
     public static ItemStack toStack(IItemStack iStack) {
         if (iStack == null) {
             return ItemStack.EMPTY;
-        } else {
-            Object internal = iStack.getInternal();
-            if (internal instanceof ItemStack) {
-                return (ItemStack) internal;
-            }
-            LogHelper.logError("Not a valid item stack: " + iStack);
-
+        }
+        Object internal = iStack.getInternal();
+        if (internal instanceof ItemStack) {
             return (ItemStack) internal;
         }
+        LogHelper.logError("Not a valid item stack: " + iStack);
+
+        return (ItemStack) internal;
     }
 }

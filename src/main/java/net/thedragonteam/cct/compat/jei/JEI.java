@@ -9,26 +9,24 @@ import mezz.jei.api.ingredients.IModIngredientRegistration;
 import net.minecraftforge.fml.common.Optional.Interface;
 import net.minecraftforge.fml.common.Optional.Method;
 
-import javax.annotation.Nonnull;
-
 @Interface(iface = "mezz.jei.api.IItemBlacklist", modid = "jei", striprefs = true)
 @JEIPlugin
 public class JEI implements IModPlugin {
 
     @Method(modid = "jei")
-    public void register(@Nonnull IModRegistry registry) {
+    public void register(IModRegistry registry) {
     }
 
     @Method(modid = "jei")
-    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
     }
 
     @Method(modid = "jei")
-    public void registerIngredients(@Nonnull IModIngredientRegistration registry) {
+    public void registerIngredients(IModIngredientRegistration registry) {
     }
 
     @Method(modid = "jei")
     @Override
-    public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
+    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
     }
 }
