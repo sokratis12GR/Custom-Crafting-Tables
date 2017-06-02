@@ -1,3 +1,24 @@
+### **CCT 1.2.0**
+
+**Features Added**:
+
+* Added a few config options such as:
+    * Added the ability to disable interaction with each table, including the vanilla one via config.
+    * Added the ability to color the name of the block while in item form
+    * Added the ability to set a stack limit for the tables item forms
+
+* Added German Translation
+
+* Added an update checker
+
+**Bugs Fixed**:
+
+* Added a check for if the arrays in the config are valid and/or replace them with a catcher if they are not.
+
+**Bugs Fixed**:
+
+* A bit of code tweaking here and there to improve performance
+
 ### **CCT 1.1.0**
 
 **Features Added**:
