@@ -4,12 +4,13 @@
 
 package net.thedragonteam.cct.registry;
 
-import net.minecraftforge.fml.common.Loader;
-import net.thedragonteam.cct.compat.ICompatibility;
-import net.thedragonteam.cct.compat.CompatibilityMineTweaker;
 import net.thedragonteam.cct.compat.CompatibilityJustEnoughItems;
+import net.thedragonteam.cct.compat.CompatibilityMineTweaker;
+import net.thedragonteam.cct.compat.ICompatibility;
 
 import java.util.ArrayList;
+
+import static net.minecraftforge.fml.common.Loader.isModLoaded;
 
 public class ModCompatibility {
     private static ArrayList<ICompatibility> compatibilities = new ArrayList<>();
@@ -21,7 +22,7 @@ public class ModCompatibility {
 
     public static void loadCompat(ICompatibility.InitializationPhase phase) {
         for (ICompatibility compatibility : compatibilities) {
-            if (Loader.isModLoaded(compatibility.getModid()) && compatibility.enableCompat()) {
+            if (isModLoaded(compatibility.getModid()) && compatibility.enableCompat()) {
                 compatibility.loadCompatibility(phase);
             }
         }
