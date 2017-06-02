@@ -9,11 +9,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import static net.thedragonteam.cct.CustomCraftingTables.MODID;
+import static net.thedragonteam.cct.util.NBTHelper.checkNBT;
 
 public final class Utils {
 
     public static ItemStack setUnbreakable(ItemStack stack) {
-        NBTHelper.checkNBT(stack);
+        checkNBT(stack);
         stack.getTagCompound().setBoolean("Unbreakable", true);
         return stack;
     }

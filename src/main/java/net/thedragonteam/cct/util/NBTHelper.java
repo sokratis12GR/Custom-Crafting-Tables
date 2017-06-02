@@ -9,10 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NBTHelper {
 
-    public static ItemStack checkNBT(ItemStack stack) {
-        if (stack.getTagCompound() == null)
+    public static void checkNBT(ItemStack stack) {
+        if (stack.getTagCompound() == null) {
             stack.setTagCompound(new NBTTagCompound());
-
-        return stack;
+        }
     }
 }
