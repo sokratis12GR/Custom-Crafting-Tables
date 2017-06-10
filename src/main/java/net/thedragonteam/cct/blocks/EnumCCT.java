@@ -59,10 +59,7 @@ public enum EnumCCT implements IStringSerializable {
     }
 
     public String getDisplayName() {
-        if (this.getBlockNumber() < cctNames.length) {
-            return cctNames[this.getBlockNumber()];
-        }
-        return "Not enough array members for the cctNames array";
+        return this.getBlockNumber() < cctNames.length ? cctNames[this.getBlockNumber()] : "Not enough array members for the cctNames array";
     }
 
     public String getDisplayName(String alternative) {
@@ -77,17 +74,10 @@ public enum EnumCCT implements IStringSerializable {
     }
 
     public TextFormatting getColor() {
-        if (this.getBlockNumber() < recolorCCTNames.length) {
-            String colorName = recolorCCTNames[this.getBlockNumber()];
-            return getValueByName(colorName);
-        }
-        return WHITE;
+        return this.getBlockNumber() < recolorCCTNames.length ? getValueByName(recolorCCTNames[this.getBlockNumber()]) : WHITE;
     }
 
     public int getStackSize() {
-        if (this.getBlockNumber() < cctMaxStackSize.length) {
-            return cctMaxStackSize[this.getBlockNumber()];
-        }
-        return 64;
+        return this.getBlockNumber() < cctMaxStackSize.length ? cctMaxStackSize[this.getBlockNumber()] : 64;
     }
 }
