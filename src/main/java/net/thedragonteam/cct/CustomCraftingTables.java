@@ -41,7 +41,7 @@ public class CustomCraftingTables {
      * Updates every time a new block, item or features is added or change,
      * resets on MAJOR changes
      */
-    public static final int MINOR = 2;
+    public static final int MINOR = 3;
     /**
      * Updates every time a bug is fixed or issue solved or very minor code changes,
      * resets on MINOR changes
@@ -54,7 +54,7 @@ public class CustomCraftingTables {
     public static final String MODID = "cct";
     public static final String MODNAME = "Custom Crafting Tables";
     public static final String LIB_VERSION = "1.11.2-3.2.2";
-    public static final String DEPEND = "required-after:thedragonlib@[" + LIB_VERSION + ",);";
+    public static final String DEPEND = "required-after:forgelin;" + "required-after:thedragonlib@[" + LIB_VERSION + ",);";
     public static final String CLIENT_PROXY = "net.thedragonteam.cct.proxy.ClientProxy";
     public static final String SERVER_PROXY = "net.thedragonteam.cct.proxy.ServerProxy";
     public static final String GUIFACTORY = "net.thedragonteam.cct.client.gui.ConfigGuiFactory";
