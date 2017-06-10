@@ -130,6 +130,7 @@ curseforge {
             requiredLibrary 'shadowfacts-forgelin'
             requiredLibrary 'thedragonlib'
             requiredLibrary 'crafttweaker'
+            requiredLibrary 'shadowfacts-forgelin'
             optionalLibrary 'just-enough-items-jei'
         }
     }
