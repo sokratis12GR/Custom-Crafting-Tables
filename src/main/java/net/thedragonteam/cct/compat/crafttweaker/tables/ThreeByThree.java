@@ -4,22 +4,23 @@
 
 package net.thedragonteam.cct.compat.crafttweaker.tables;
 
-import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.thedragonteam.cct.api.crafting.cct_3x3.ThreeByThreeManager;
 import net.thedragonteam.cct.api.crafting.cct_3x3.ShapedOreRecipe;
 import net.thedragonteam.cct.api.crafting.cct_3x3.ShapelessOreRecipe;
+import net.thedragonteam.cct.api.crafting.cct_3x3.ThreeByThreeManager;
+import net.thedragonteam.cct.compat.crafttweaker.utils.AddUndoableAction;
+import net.thedragonteam.cct.compat.crafttweaker.utils.RemoveUndoableAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import static com.blamejared.mtlib.helpers.InputHelper.toObjects;
-import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toStack;
 import static net.thedragonteam.cct.CustomCraftingTables.MODID;
 import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toThreeByThreeObjects;
+import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toObjects;
+import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toStack;
 
 @ZenClass("mods." + MODID + ".ThreeByThree")
 public class ThreeByThree {
@@ -39,11 +40,12 @@ public class ThreeByThree {
         MineTweakerAPI.apply(new Remove(toStack(target)));
     }
 
-    private static class Add implements IUndoableAction {
+    private static class Add extends AddUndoableAction {
         IRecipe recipe;
 
         public Add(IRecipe add) {
-            recipe = add;
+            super(add, 3);
+            this.recipe = add;
         }
 
         @Override
@@ -53,39 +55,20 @@ public class ThreeByThree {
         }
 
         @Override
-        public boolean canUndo() {
-            return true;
-        }
-
-        @Override
         public void undo() {
             ThreeByThreeManager.getInstance().getRecipeList().remove(recipe);
             MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
         }
 
-        @Override
-        public String describe() {
-            return "Adding 3x3 Recipe for " + recipe.getRecipeOutput().getDisplayName();
-        }
-
-        @Override
-        public String describeUndo() {
-            return "Un-adding 3x3 for " + recipe.getRecipeOutput().getDisplayName();
-        }
-
-        @Override
-        public Object getOverrideKey() {
-            return null;
-        }
-
     }
 
-    private static class Remove implements IUndoableAction {
+    private static class Remove extends RemoveUndoableAction {
         IRecipe recipe = null;
         ItemStack remove;
 
-        public Remove(ItemStack rem) {
-            remove = rem;
+        public Remove(ItemStack remove) {
+            super(remove, 3);
+            this.remove = remove;
         }
 
         @Override
@@ -105,30 +88,9 @@ public class ThreeByThree {
         }
 
         @Override
-        public boolean canUndo() {
-            return recipe != null;
-        }
-
-        @Override
         public void undo() {
             ThreeByThreeManager.getInstance().getRecipeList().add(recipe);
             MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
         }
-
-        @Override
-        public String describe() {
-            return "Removing 3x3 Recipe for " + remove.getDisplayName();
-        }
-
-        @Override
-        public String describeUndo() {
-            return "Un-removing 3x3 Recipe for " + remove.getDisplayName();
-        }
-
-        @Override
-        public Object getOverrideKey() {
-            return null;
-        }
-
     }
 }

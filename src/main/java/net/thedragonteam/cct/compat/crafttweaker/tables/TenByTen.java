@@ -4,7 +4,6 @@
 
 package net.thedragonteam.cct.compat.crafttweaker.tables;
 
-import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
@@ -13,13 +12,15 @@ import net.minecraft.item.crafting.IRecipe;
 import net.thedragonteam.cct.api.crafting.cct_10x10.ShapedOreRecipe;
 import net.thedragonteam.cct.api.crafting.cct_10x10.ShapelessOreRecipe;
 import net.thedragonteam.cct.api.crafting.cct_10x10.TenByTenManager;
+import net.thedragonteam.cct.compat.crafttweaker.utils.AddUndoableAction;
+import net.thedragonteam.cct.compat.crafttweaker.utils.RemoveUndoableAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import static com.blamejared.mtlib.helpers.InputHelper.toObjects;
-import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toStack;
 import static net.thedragonteam.cct.CustomCraftingTables.MODID;
 import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toTenByTenObjects;
+import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toObjects;
+import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toStack;
 
 @ZenClass("mods." + MODID + ".TenByTen")
 public class TenByTen {
@@ -39,11 +40,12 @@ public class TenByTen {
         MineTweakerAPI.apply(new Remove(toStack(target)));
     }
 
-    private static class Add implements IUndoableAction {
+    private static class Add extends AddUndoableAction {
         IRecipe recipe;
 
         public Add(IRecipe add) {
-            recipe = add;
+            super(add, 10);
+            this.recipe = add;
         }
 
         @Override
@@ -53,39 +55,19 @@ public class TenByTen {
         }
 
         @Override
-        public boolean canUndo() {
-            return true;
-        }
-
-        @Override
         public void undo() {
             TenByTenManager.getInstance().getRecipeList().remove(recipe);
             MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
         }
-
-        @Override
-        public String describe() {
-            return "Adding 10x10 Recipe for " + recipe.getRecipeOutput().getDisplayName();
-        }
-
-        @Override
-        public String describeUndo() {
-            return "Un-adding 10x10 for " + recipe.getRecipeOutput().getDisplayName();
-        }
-
-        @Override
-        public Object getOverrideKey() {
-            return null;
-        }
-
     }
 
-    private static class Remove implements IUndoableAction {
+    private static class Remove extends RemoveUndoableAction {
         IRecipe recipe = null;
         ItemStack remove;
 
-        public Remove(ItemStack rem) {
-            remove = rem;
+        public Remove(ItemStack remove) {
+            super(remove, 10);
+            this.remove = remove;
         }
 
         @Override
@@ -105,29 +87,9 @@ public class TenByTen {
         }
 
         @Override
-        public boolean canUndo() {
-            return recipe != null;
-        }
-
-        @Override
         public void undo() {
             TenByTenManager.getInstance().getRecipeList().add(recipe);
             MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
-        }
-
-        @Override
-        public String describe() {
-            return "Removing 10x10 Recipe for " + remove.getDisplayName();
-        }
-
-        @Override
-        public String describeUndo() {
-            return "Un-removing 10x10 Recipe for " + remove.getDisplayName();
-        }
-
-        @Override
-        public Object getOverrideKey() {
-            return null;
         }
 
     }

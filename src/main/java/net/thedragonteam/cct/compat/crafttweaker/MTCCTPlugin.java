@@ -4,16 +4,13 @@
 
 package net.thedragonteam.cct.compat.crafttweaker;
 
-import com.blamejared.mtlib.helpers.LogHelper;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
-import net.minecraft.item.ItemStack;
 import net.thedragonteam.cct.compat.crafttweaker.tables.*;
 
 import java.util.ArrayList;
 
-import static com.blamejared.mtlib.helpers.InputHelper.toObject;
+import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toObject;
 
 public class MTCCTPlugin {
 
@@ -232,16 +229,5 @@ public class MTCCTPlugin {
         }
     }
 
-    public static ItemStack toStack(IItemStack iStack) {
-        if (iStack == null) {
-            return ItemStack.EMPTY;
-        }
-        Object internal = iStack.getInternal();
-        if (internal instanceof ItemStack) {
-            return (ItemStack) internal;
-        }
-        LogHelper.logError("Not a valid item stack: " + iStack);
 
-        return (ItemStack) internal;
-    }
 }

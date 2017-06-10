@@ -4,7 +4,6 @@
 
 package net.thedragonteam.cct.compat.crafttweaker.tables;
 
-import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
@@ -13,13 +12,15 @@ import net.minecraft.item.crafting.IRecipe;
 import net.thedragonteam.cct.api.crafting.cct_4x4.FourByFourManager;
 import net.thedragonteam.cct.api.crafting.cct_4x4.ShapedOreRecipe;
 import net.thedragonteam.cct.api.crafting.cct_4x4.ShapelessOreRecipe;
+import net.thedragonteam.cct.compat.crafttweaker.utils.AddUndoableAction;
+import net.thedragonteam.cct.compat.crafttweaker.utils.RemoveUndoableAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import static com.blamejared.mtlib.helpers.InputHelper.toObjects;
-import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toStack;
 import static net.thedragonteam.cct.CustomCraftingTables.MODID;
 import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toFourByFourShapedObjects;
+import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toObjects;
+import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toStack;
 
 @ZenClass("mods." + MODID + ".FourByFour")
 public class FourByFour {
@@ -39,11 +40,12 @@ public class FourByFour {
         MineTweakerAPI.apply(new Remove(toStack(target)));
     }
 
-    private static class Add implements IUndoableAction {
+    private static class Add extends AddUndoableAction {
         IRecipe recipe;
 
         public Add(IRecipe add) {
-            recipe = add;
+            super(add, 4);
+            this.recipe = add;
         }
 
         @Override
@@ -53,39 +55,20 @@ public class FourByFour {
         }
 
         @Override
-        public boolean canUndo() {
-            return true;
-        }
-
-        @Override
         public void undo() {
             FourByFourManager.getInstance().getRecipeList().remove(recipe);
             MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
         }
 
-        @Override
-        public String describe() {
-            return "Adding 4x4 Recipe for " + recipe.getRecipeOutput().getDisplayName();
-        }
-
-        @Override
-        public String describeUndo() {
-            return "Un-adding 4x4 for " + recipe.getRecipeOutput().getDisplayName();
-        }
-
-        @Override
-        public Object getOverrideKey() {
-            return null;
-        }
-
     }
 
-    private static class Remove implements IUndoableAction {
+    private static class Remove extends RemoveUndoableAction {
         IRecipe recipe = null;
         ItemStack remove;
 
-        public Remove(ItemStack rem) {
-            remove = rem;
+        public Remove(ItemStack remove) {
+            super(remove, 4);
+            this.remove = remove;
         }
 
         @Override
@@ -105,29 +88,9 @@ public class FourByFour {
         }
 
         @Override
-        public boolean canUndo() {
-            return recipe != null;
-        }
-
-        @Override
         public void undo() {
             FourByFourManager.getInstance().getRecipeList().add(recipe);
             MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
-        }
-
-        @Override
-        public String describe() {
-            return "Removing 4x4 Recipe for " + remove.getDisplayName();
-        }
-
-        @Override
-        public String describeUndo() {
-            return "Un-removing 4x4 Recipe for " + remove.getDisplayName();
-        }
-
-        @Override
-        public Object getOverrideKey() {
-            return null;
         }
 
     }
