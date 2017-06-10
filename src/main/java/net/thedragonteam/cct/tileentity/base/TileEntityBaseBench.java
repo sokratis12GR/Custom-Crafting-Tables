@@ -16,7 +16,9 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.stream.IntStream;
+
+import static java.lang.String.format;
+import static java.util.stream.IntStream.rangeClosed;
 
 /**
  * ArmorPlus created by sokratis12GR
@@ -33,21 +35,21 @@ public class TileEntityBaseBench extends TileEntityInventoryBase {
     public NonNullList<ItemStack> inventory = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
     public String customName;
 
-    public TileEntityBaseBench(String tileEntityName, int inventorySize) {
-        super(inventorySize);
-        this.tileEntityName = tileEntityName;
-        this.inventorySize = inventorySize;
+    public TileEntityBaseBench(int size) {
+        super((size * size) + 1);
+        this.tileEntityName = format("cct_%sx%s", size, size);
+        this.inventorySize = (size * size) + 1;
         this.inventory = this.itemHandler.getItems();
     }
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        return IntStream.rangeClosed(0, itemHandler.getSlots()).anyMatch(i -> itemHandler.getStackInSlot(slot) != ItemStack.EMPTY);
+        return rangeClosed(0, itemHandler.getSlots()).anyMatch(i -> itemHandler.getStackInSlot(slot) != ItemStack.EMPTY);
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack) {
-        return IntStream.rangeClosed(0, itemHandler.getSlots()).anyMatch(i -> itemHandler.getStackInSlot(slot) != ItemStack.EMPTY);
+        return rangeClosed(0, itemHandler.getSlots()).anyMatch(i -> itemHandler.getStackInSlot(slot) != ItemStack.EMPTY);
     }
 
     public String getCustomName() {

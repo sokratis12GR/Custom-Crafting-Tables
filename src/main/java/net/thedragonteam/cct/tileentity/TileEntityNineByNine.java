@@ -13,7 +13,7 @@ import net.thedragonteam.cct.tileentity.base.TileEntityBaseBench;
 public class TileEntityNineByNine extends TileEntityBaseBench {
 
     public TileEntityNineByNine() {
-        super("cct_9x9", 82);
+        super(9);
     }
 
 }
