@@ -11,6 +11,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.util.ResourceLocation;
+import net.thedragonteam.cct.CustomCraftingTables;
 import net.thedragonteam.cct.compat.jei.CCTPlugin;
 import net.thedragonteam.cct.compat.jei.JEIUtils;
 
@@ -57,6 +58,17 @@ public class CategoryBase extends BlankRecipeCategory<IRecipeWrapper> {
     @Override
     public String getTitle() {
         return localizedName;
+    }
+
+    /**
+     * Return the name of the mod associated with this recipe category.
+     * Used for the recipe category tab's tooltip.
+     *
+     * @since JEI 4.5.0
+     */
+    @Override
+    public String getModName() {
+        return CustomCraftingTables.MODNAME;
     }
 
     @Nonnull

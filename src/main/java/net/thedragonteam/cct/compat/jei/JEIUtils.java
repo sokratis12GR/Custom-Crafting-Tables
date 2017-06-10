@@ -14,7 +14,6 @@ import mezz.jei.util.ErrorUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class JEIUtils {
@@ -50,7 +49,7 @@ public class JEIUtils {
         guiItemStacks.set(outputSlot, outputs.get(0));
     }
 
-    public static void getIngredients(@Nonnull IIngredients ingredients, IRecipe recipe, List<ItemStack> recipeItems) {
+    public static void getIngredients(IIngredients ingredients, IRecipe recipe, List<ItemStack> recipeItems) {
         ItemStack recipeOutput = recipe.getRecipeOutput();
         try {
             ingredients.setInputs(ItemStack.class, recipeItems);

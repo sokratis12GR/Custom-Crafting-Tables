@@ -8,6 +8,7 @@ import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 import net.thedragonteam.cct.api.crafting.cct_10x10.TenByTenManager;
 import net.thedragonteam.cct.api.crafting.cct_3x3.ThreeByThreeManager;
@@ -43,7 +44,7 @@ public class CCTPlugin extends BlankModPlugin {
     public static IJeiHelpers jeiHelper;
 
     @Override
-    public void register(IModRegistry registry) {
+    public void registerCategories(IRecipeCategoryRegistration registry) {
         jeiHelper = registry.getJeiHelpers();
         registry.addRecipeCategories(
                 new CategoryBase(29, 16, 116, 54, 94, 18, 3, JEI_CATEGORY_3X3),
@@ -53,8 +54,14 @@ public class CCTPlugin extends BlankModPlugin {
                 new CategoryBaseAdvanced(11, 16, 178, 126, 156, 54, 7, JEI_CATEGORY_7X7, 160, 180),
                 new CategoryBaseAdvanced(11, 16, 201, 144, 180, 65, 8, JEI_CATEGORY_8X8, 180, 90),
                 new CategoryBaseAdvanced(11, 16, 200, 162, 178, 35, 9, JEI_CATEGORY_9X9, 185, 60),
-                new CategoryBaseAdvanced(38, 16, 213, 180, 192, 118, 10, JEI_CATEGORY_10X10, 194, 140)
+                new CategoryBaseAdvanced(38, 16, 213, 180, 190, 117, 10, JEI_CATEGORY_10X10, 194, 140)
         );
+        super.registerCategories(registry);
+    }
+
+    @Override
+    public void register(IModRegistry registry) {
+        jeiHelper = registry.getJeiHelpers();
 
         registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_3x3.ShapedRecipes.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_3X3);
         registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_3x3.ShapelessRecipes.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), JEI_CATEGORY_3X3);
@@ -117,7 +124,7 @@ public class CCTPlugin extends BlankModPlugin {
         recipeTransferRegistry.addRecipeTransferHandler(new AdvancedRecipeTransferInfo<>(ContainerTenByTen.class, JEI_CATEGORY_10X10, 1, 100, 101, 36, true, 4));
 
         for (int i = 0; i < JEI_CATEGORIES.length; i++) {
-            registry.addRecipeCategoryCraftingItem(getItemStack(ModBlocks.blockCCT[i + 2]), JEI_CATEGORIES[i]);
+            registry.addRecipeCatalyst(getItemStack(ModBlocks.blockCCT[i + 2]), JEI_CATEGORIES[i]);
         }
 
         registry.addRecipes(ThreeByThreeManager.getInstance().getRecipeList(), JEI_CATEGORY_3X3);
