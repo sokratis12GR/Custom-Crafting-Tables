@@ -17,7 +17,7 @@ import static net.thedragonteam.cct.CCTConfig.cctGuiNames;
 public class GuiTenByTen extends GuiBaseBench {
 
     public GuiTenByTen(InventoryPlayer playerInv, TileEntityTenByTen tile) {
-        super(new ContainerTenByTen(playerInv, tile),"10x10", 256, 256, 9);
+        super(new ContainerTenByTen(playerInv, tile), 10, 256, 256, 9);
     }
 
     /**

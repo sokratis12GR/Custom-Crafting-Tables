@@ -17,6 +17,6 @@ import net.thedragonteam.cct.tileentity.TileEntityOneByOne;
 public class GuiOneByOne extends GuiBaseBench {
 
     public GuiOneByOne(InventoryPlayer playerInv, TileEntityOneByOne tile) {
-        super(new ContainerOneByOne(playerInv, tile),"1x1", 176, 165, 0);
+        super(new ContainerOneByOne(playerInv, tile), 1, 176, 165, 0);
     }
 }

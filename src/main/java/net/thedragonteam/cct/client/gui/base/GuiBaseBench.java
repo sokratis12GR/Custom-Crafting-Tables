@@ -12,6 +12,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.Objects;
 
+import static java.lang.String.format;
 import static net.thedragonteam.cct.CCTConfig.cctGuiNames;
 import static net.thedragonteam.cct.util.Utils.setRL;
 
@@ -21,19 +22,20 @@ public class GuiBaseBench extends GuiContainer {
     public String name;
     public int guiNumber;
 
-    public GuiBaseBench(Container container, ResourceLocation resourceLocation, String name, int xSize, int ySize, int guiNumber) {
+    public GuiBaseBench(Container container, ResourceLocation resourceLocation, int size, int xSize, int ySize, int guiNumber) {
         super(container);
         this.resourceLocation = resourceLocation;
-        this.name = name;
+        this.name = format("%sx%s", size, size);
         this.xSize = xSize;
         this.ySize = ySize;
         this.guiNumber = guiNumber;
     }
 
-    public GuiBaseBench(Container container, String name, int xSize, int ySize, int guiNumber) {
+    public GuiBaseBench(Container container, int size, int xSize, int ySize, int guiNumber) {
         super(container);
-        this.resourceLocation = setRL(String.format("textures/gui/container/gui_%s.png", name));
-        this.name = name;
+        String actualSize = format("%sx%s", size, size);
+        this.resourceLocation = setRL(format("textures/gui/container/gui_%s.png", actualSize));
+        this.name = actualSize;
         this.xSize = xSize;
         this.ySize = ySize;
         this.guiNumber = guiNumber;

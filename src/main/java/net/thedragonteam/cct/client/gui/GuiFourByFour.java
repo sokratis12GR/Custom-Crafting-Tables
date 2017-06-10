@@ -17,6 +17,6 @@ import net.thedragonteam.cct.tileentity.TileEntityFourByFour;
 public class GuiFourByFour extends GuiBaseBench {
 
     public GuiFourByFour(InventoryPlayer playerInv, TileEntityFourByFour tile) {
-        super(new ContainerFourByFour(playerInv, tile),"4x4", 176, 184, 3);
+        super(new ContainerFourByFour(playerInv, tile), 4, 176, 184, 3);
     }
 }

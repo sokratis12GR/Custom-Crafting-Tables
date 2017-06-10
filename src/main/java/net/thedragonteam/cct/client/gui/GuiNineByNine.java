@@ -22,7 +22,7 @@ import static net.thedragonteam.cct.CCTConfig.cctGuiNames;
 public class GuiNineByNine extends GuiBaseBench {
 
     public GuiNineByNine(InventoryPlayer playerInv, TileEntityNineByNine tile) {
-        super(new ContainerNineByNine(playerInv, tile),"9x9", 256, 256, 8);
+        super(new ContainerNineByNine(playerInv, tile), 9, 256, 256, 8);
     }
 
     /**

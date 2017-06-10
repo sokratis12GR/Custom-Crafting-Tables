@@ -17,6 +17,6 @@ import net.thedragonteam.cct.tileentity.TileEntitySevenBySeven;
 public class GuiSevenBySeven extends GuiBaseBench {
 
     public GuiSevenBySeven(InventoryPlayer playerInv, TileEntitySevenBySeven tile) {
-        super(new ContainerSevenBySeven(playerInv, tile), "7x7", 192, 237, 6);
+        super(new ContainerSevenBySeven(playerInv, tile), 7, 192, 237, 6);
     }
 }

@@ -17,6 +17,6 @@ import net.thedragonteam.cct.tileentity.TileEntityFiveByFive;
 public class GuiFiveByFive extends GuiBaseBench {
 
     public GuiFiveByFive(InventoryPlayer playerInv, TileEntityFiveByFive tile) {
-        super(new ContainerFiveByFive(playerInv, tile),"5x5", 176, 199, 4);
+        super(new ContainerFiveByFive(playerInv, tile), 5, 176, 199, 4);
     }
 }

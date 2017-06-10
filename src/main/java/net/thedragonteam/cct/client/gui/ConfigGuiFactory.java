@@ -7,6 +7,8 @@ package net.thedragonteam.cct.client.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.IModGuiFactory;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Set;
 
@@ -22,12 +24,11 @@ public class ConfigGuiFactory implements IModGuiFactory {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public GuiScreen createConfigGui(GuiScreen parentScreen) {
-        //noinspection NewExpressionSideOnly
         return new ConfigGui(parentScreen);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public Class<? extends GuiScreen> mainConfigGuiClass() {
         return ConfigGui.class;
@@ -38,7 +39,6 @@ public class ConfigGuiFactory implements IModGuiFactory {
         return null;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
         return null;

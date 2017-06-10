@@ -17,6 +17,6 @@ import net.thedragonteam.cct.tileentity.TileEntitySixBySix;
 public class GuiSixBySix extends GuiBaseBench {
 
     public GuiSixBySix(InventoryPlayer playerInv, TileEntitySixBySix tile) {
-        super(new ContainerSixBySix(playerInv, tile),"6x6", 176, 219, 5);
+        super(new ContainerSixBySix(playerInv, tile), 6, 176, 219, 5);
     }
 }

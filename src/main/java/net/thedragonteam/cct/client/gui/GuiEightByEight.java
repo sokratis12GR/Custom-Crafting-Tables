@@ -17,6 +17,6 @@ import net.thedragonteam.cct.tileentity.TileEntityEightByEight;
 public class GuiEightByEight extends GuiBaseBench {
 
     public GuiEightByEight(InventoryPlayer playerInv, TileEntityEightByEight tile) {
-        super(new ContainerEightByEight(playerInv, tile), "8x8", 215, 255, 7);
+        super(new ContainerEightByEight(playerInv, tile), 8, 215, 255, 7);
     }
 }
