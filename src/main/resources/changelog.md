@@ -1,79 +1,21 @@
-### **CCT 1.3.0**
+### **CCT 1.12.1-2.1.1**
 
-**Dependencies**:
+* Fixed incorrect Tile Entities
 
-* Now requires JEI 4.5.0.287 or later
+### **CCT 1.12.1-2.1.0**
 
-**Features Changed**:
+* Fixed GUIs, now each block correctly opens its GUI
+* Major performance improvements
+* Tooltips now display correctly
+* The name's of the blocks now correctly represent their size
+* Fixed Registry issues
+* Craft Tweaker compatibility has been added with 100% support
+* Fixed JEI's weird rendering of pos for the output and being out of the display box
+* Simplification of the code up to 80%
 
-* Small JEI integration improvements
+### **CCT 1.12.2-2.0.0-beta**
 
-**Bugs Fixed**:
-
-* Unnecessary errors about 1x1 and 2x2 recipes (for jei reports in the log, because they don't really have integration)
-
-* Improved a bit code and performance
-
-### **CCT 1.2.1**
-
-**Dependencies**:
-
-* No longer requires MTLib in order to run
-
-* Added a warning if Forgelin isn't installed
-
-### **CCT 1.2.0**
-
-**Features Added**:
-
-* Added a few config options such as:
-    * Added the ability to disable interaction with each table, including the vanilla one via config.
-    * Added the ability to color the name of the block while in item form
-    * Added the ability to set a stack limit for the tables item forms
-
-* Added German Translation
-
-* Added an update checker
-
-**Bugs Fixed**:
-
-* Added a check for if the arrays in the config are valid and/or replace them with a catcher if they are not.
-
-**Bugs Fixed**:
-
-* A bit of code tweaking here and there to improve performance
-
-### **CCT 1.1.0**
-
-**Features Added**:
-
-* JEI Integration (all tables except 1x1 and 2x2).
-
-**Features Changed**:
-
-* 1x1 Recipes no longer have shaped/shapeless recipes,
- instead just use `mods.cct.OneByOne.addRecipe`.
-
-**Bugs Fixed**:
-
-* Some crafting tables being completely wrong with recipes.
-
-* Some Crashes.
-
-* Some Bugs causing things to not work.
-
-### **CCT 1.0.0**
-
-**Features Added**:
-
-* 1->10x1->10 Benches
-
-* CraftTweaker/MineTweaker Integration/Support
-
-* A few config options for names (block/item names and GUI display name)
-
-**Coming Soon**:
-
-* Just Enough Items (JEI) integration
-
-* And more
+* Ported to Minecraft 1.12.2
+* A few tweaks here and there
+* Improved performance and code readability slightly
+* JEI Support added (Does not work with CraftTweaker **currently**)
