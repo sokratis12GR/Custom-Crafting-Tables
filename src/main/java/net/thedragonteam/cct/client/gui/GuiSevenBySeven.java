@@ -9,7 +9,6 @@ import net.thedragonteam.cct.client.gui.base.GuiBaseBench;
 import net.thedragonteam.cct.container.ContainerSevenBySeven;
 import net.thedragonteam.cct.tileentity.TileEntitySevenBySeven;
 
-
 public class GuiSevenBySeven extends GuiBaseBench {
 
     public GuiSevenBySeven(InventoryPlayer playerInv, TileEntitySevenBySeven tile) {

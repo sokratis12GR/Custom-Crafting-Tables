@@ -9,7 +9,6 @@ import net.thedragonteam.cct.client.gui.base.GuiBaseBench;
 import net.thedragonteam.cct.container.ContainerOneByOne;
 import net.thedragonteam.cct.tileentity.TileEntityOneByOne;
 
-
 public class GuiOneByOne extends GuiBaseBench {
 
     public GuiOneByOne(InventoryPlayer playerInv, TileEntityOneByOne tile) {

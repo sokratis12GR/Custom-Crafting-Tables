@@ -6,8 +6,8 @@ import net.thedragonteam.cct.api.crafting.IRecipe;
 import static java.lang.String.format;
 
 /**
- * Created by sokratis12GR on 6/10/2017.
- */
+ * @author Sokratis Fotkatzikis - TheDragonTeam
+ **/
 public abstract class AddUndoableAction implements IAction {
 
     private IRecipe recipe;

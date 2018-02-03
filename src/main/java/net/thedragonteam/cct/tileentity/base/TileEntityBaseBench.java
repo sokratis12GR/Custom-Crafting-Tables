@@ -22,10 +22,6 @@ import java.util.stream.IntStream;
 import static java.lang.String.format;
 import static java.util.stream.IntStream.rangeClosed;
 
-/**
- * ArmorPlus created by sokratis12GR
- * - TheDragonTeam
- */
 public class TileEntityBaseBench extends TileEntityInventoryBase {
 
     public int inventorySize;

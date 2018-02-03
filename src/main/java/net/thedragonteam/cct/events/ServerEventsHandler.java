@@ -15,6 +15,9 @@ import java.util.stream.IntStream;
 import static net.thedragonteam.cct.CCTConfig.*;
 import static net.thedragonteam.cct.registry.ModBlocks.blockCCT;
 
+/**
+ * @author Sokratis Fotkatzikis - TheDragonTeam
+ **/
 @Mod.EventBusSubscriber(modid = CustomCraftingTables.MODID)
 public class ServerEventsHandler {
 

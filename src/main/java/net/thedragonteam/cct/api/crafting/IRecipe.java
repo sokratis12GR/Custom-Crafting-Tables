@@ -9,7 +9,6 @@ import java.util.stream.IntStream;
 
 import static net.minecraftforge.common.ForgeHooks.getContainerItem;
 
-
 public interface IRecipe {
     /**
      * Used to check if a recipe matches current crafting inventory

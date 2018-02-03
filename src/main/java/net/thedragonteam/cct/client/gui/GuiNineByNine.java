@@ -14,7 +14,6 @@ import java.util.Objects;
 
 import static net.thedragonteam.cct.CCTConfig.cctGuiNames;
 
-
 public class GuiNineByNine extends GuiBaseBench {
 
     public GuiNineByNine(InventoryPlayer playerInv, TileEntityNineByNine tile) {

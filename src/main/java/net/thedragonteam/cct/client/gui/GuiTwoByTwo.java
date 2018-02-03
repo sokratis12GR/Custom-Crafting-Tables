@@ -9,7 +9,6 @@ import net.thedragonteam.cct.client.gui.base.GuiBaseBench;
 import net.thedragonteam.cct.container.ContainerTwoByTwo;
 import net.thedragonteam.cct.tileentity.TileEntityTwoByTwo;
 
-
 public class GuiTwoByTwo extends GuiBaseBench {
 
     public GuiTwoByTwo(InventoryPlayer playerInv, TileEntityTwoByTwo tile) {

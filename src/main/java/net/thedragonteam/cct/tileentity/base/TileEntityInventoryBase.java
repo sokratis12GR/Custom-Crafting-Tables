@@ -9,10 +9,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.IItemHandler;
 import net.thedragonteam.thedragonlib.util.ItemStackHandlerImproved;
 
-/**
- * ArmorPlus created by sokratis12GR
- * - TheDragonTeam
- */
 public abstract class TileEntityInventoryBase extends TileEntityBase {
 
     public ItemStackHandlerImproved itemHandler;

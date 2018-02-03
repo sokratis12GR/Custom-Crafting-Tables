@@ -5,6 +5,9 @@ import net.minecraft.item.ItemStack;
 
 import static java.lang.String.format;
 
+/**
+ * @author Sokratis Fotkatzikis - TheDragonTeam
+ **/
 public abstract class RemoveUndoableAction implements IAction {
     private ItemStack remove;
     private String xy;

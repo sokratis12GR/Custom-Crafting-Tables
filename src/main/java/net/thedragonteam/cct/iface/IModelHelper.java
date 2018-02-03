@@ -18,6 +18,9 @@ import static net.thedragonteam.cct.util.Utils.isNotNullNorEmpty;
 import static net.thedragonteam.cct.util.Utils.isNullOrEmpty;
 import static net.thedragonteam.thedragonlib.util.ItemStackUtils.getItem;
 
+/**
+ * @author Sokratis Fotkatzikis - TheDragonTeam
+ **/
 public interface IModelHelper {
 
     @SideOnly(Side.CLIENT)

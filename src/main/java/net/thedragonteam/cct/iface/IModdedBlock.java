@@ -5,6 +5,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+/**
+ * @author Sokratis Fotkatzikis - TheDragonTeam
+ **/
 public interface IModdedBlock extends IModelHelper, IForgeRegistryEntry<Block> {
 
     @SideOnly(Side.CLIENT)
