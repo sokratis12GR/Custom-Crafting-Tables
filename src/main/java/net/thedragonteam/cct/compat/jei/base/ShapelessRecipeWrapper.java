@@ -4,27 +4,21 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
+import net.thedragonteam.cct.api.crafting.IRecipe;
 import net.thedragonteam.cct.compat.jei.JEIUtils;
-
-import java.util.List;
 
 public class ShapelessRecipeWrapper extends BlankRecipeWrapper implements IRecipeWrapper {
 
     private final IRecipe recipe;
-    private final List<ItemStack> inputList;
+    private final NonNullList<ItemStack> inputList;
 
-    public ShapelessRecipeWrapper(IRecipe recipe, List<ItemStack> inputList) {
+    public ShapelessRecipeWrapper(IRecipe recipe, NonNullList<ItemStack> inputList) {
         this.recipe = recipe;
         this.inputList = inputList;
-        for (Object input : inputList) {
-            if (input instanceof ItemStack) {
-                ItemStack itemStack = (ItemStack) input;
-                if (!itemStack.isEmpty() && itemStack.getCount() != 1) {
-                    itemStack.setCount(1);
-                }
-            }
-        }
+        inputList.stream().filter(ItemStack.class::isInstance).filter(itemStack ->
+            !itemStack.isEmpty() && itemStack.getCount() != 1
+        ).forEachOrdered(itemStack -> itemStack.setCount(1));
     }
 
     @Override

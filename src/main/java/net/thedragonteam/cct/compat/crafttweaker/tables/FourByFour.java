@@ -4,40 +4,42 @@
 
 package net.thedragonteam.cct.compat.crafttweaker.tables;
 
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.thedragonteam.cct.api.crafting.cct_4x4.FourByFourManager;
-import net.thedragonteam.cct.api.crafting.cct_4x4.ShapedOreRecipe;
-import net.thedragonteam.cct.api.crafting.cct_4x4.ShapelessOreRecipe;
+import net.thedragonteam.cct.api.crafting.IRecipe;
+import net.thedragonteam.cct.api.crafting.base.BaseCraftingManager;
+import net.thedragonteam.cct.api.crafting.base.BaseShapedOreRecipe;
+import net.thedragonteam.cct.api.crafting.base.BaseShapelessOreRecipe;
+import net.thedragonteam.cct.compat.crafttweaker.CTCCTPlugin;
 import net.thedragonteam.cct.compat.crafttweaker.utils.AddUndoableAction;
 import net.thedragonteam.cct.compat.crafttweaker.utils.RemoveUndoableAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import static net.thedragonteam.cct.CustomCraftingTables.MODID;
-import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toFourByFourShapedObjects;
+import java.util.List;
+
+import static net.thedragonteam.cct.compat.crafttweaker.CTCCTPlugin.toFourByFourShapedObjects;
 import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toObjects;
 import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toStack;
 
-@ZenClass("mods." + MODID + ".FourByFour")
+@ZenClass("mods.cct.FourByFour")
 public class FourByFour {
 
     @ZenMethod
     public static void addShapeless(IItemStack output, IIngredient[] ingredients) {
-        MineTweakerAPI.apply(new Add(new ShapelessOreRecipe(toStack(output), toObjects(ingredients))));
+        CraftTweakerAPI.apply(new Add(new BaseShapelessOreRecipe(toStack(output), toObjects(ingredients))));
     }
 
     @ZenMethod
     public static void addShaped(IItemStack output, IIngredient[][] ingredients) {
-        MineTweakerAPI.apply(new Add(new ShapedOreRecipe(toStack(output), toFourByFourShapedObjects(ingredients))));
+        CraftTweakerAPI.apply(new Add(new BaseShapedOreRecipe(4, toStack(output), toFourByFourShapedObjects(ingredients))));
     }
 
     @ZenMethod
     public static void remove(IItemStack target) {
-        MineTweakerAPI.apply(new Remove(toStack(target)));
+        CraftTweakerAPI.apply(new Remove(toStack(target)));
     }
 
     private static class Add extends AddUndoableAction {
@@ -50,21 +52,13 @@ public class FourByFour {
 
         @Override
         public void apply() {
-            FourByFourManager.getInstance().getRecipeList().add(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
+            BaseCraftingManager.getFourByFour().getRecipeList().add(recipe);
         }
-
-        @Override
-        public void undo() {
-            FourByFourManager.getInstance().getRecipeList().remove(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
-        }
-
     }
 
     private static class Remove extends RemoveUndoableAction {
-        IRecipe recipe = null;
         ItemStack remove;
+        List<IRecipe> recipeList = BaseCraftingManager.getFourByFour().getRecipeList();
 
         public Remove(ItemStack remove) {
             super(remove, 4);
@@ -73,25 +67,7 @@ public class FourByFour {
 
         @Override
         public void apply() {
-
-            for (Object obj : FourByFourManager.getInstance().getRecipeList()) {
-                if (obj instanceof IRecipe) {
-                    IRecipe craft = (IRecipe) obj;
-                    if (craft.getRecipeOutput().isItemEqual(remove)) {
-                        recipe = craft;
-                        FourByFourManager.getInstance().getRecipeList().remove(obj);
-                        MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
-                        break;
-                    }
-                }
-            }
+            CTCCTPlugin.removeRecipe(recipeList, remove);
         }
-
-        @Override
-        public void undo() {
-            FourByFourManager.getInstance().getRecipeList().add(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
-        }
-
     }
 }

@@ -4,17 +4,17 @@
 
 package net.thedragonteam.cct.compat;
 
-import net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin;
+import net.thedragonteam.cct.compat.crafttweaker.CTCCTPlugin;
 import net.thedragonteam.thedragonlib.util.LogHelper;
 
 public class CompatibilityMineTweaker implements ICompatibility {
 
     public void loadCompatibility(ICompatibility.InitializationPhase phase) {
-        if (phase == ICompatibility.InitializationPhase.POST_INIT) {
+        if (phase == InitializationPhase.PRE_INIT) {
             try {
-                MTCCTPlugin.init();
+                CTCCTPlugin.init();
             } catch (Throwable e) {
-                LogHelper.INSTANCE.error("Custom Crafting Tables (CCT) seems to be having trouble with CraftTweaker.");
+                LogHelper.error("Custom Crafting Tables (CCT) seems to be having trouble with CraftTweaker.");
             }
         }
     }

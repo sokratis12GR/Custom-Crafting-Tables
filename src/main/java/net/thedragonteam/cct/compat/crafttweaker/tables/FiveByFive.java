@@ -4,40 +4,42 @@
 
 package net.thedragonteam.cct.compat.crafttweaker.tables;
 
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.thedragonteam.cct.api.crafting.cct_5x5.FiveByFiveManager;
-import net.thedragonteam.cct.api.crafting.cct_5x5.ShapedOreRecipe;
-import net.thedragonteam.cct.api.crafting.cct_5x5.ShapelessOreRecipe;
+import net.thedragonteam.cct.api.crafting.IRecipe;
+import net.thedragonteam.cct.api.crafting.base.BaseCraftingManager;
+import net.thedragonteam.cct.api.crafting.base.BaseShapedOreRecipe;
+import net.thedragonteam.cct.api.crafting.base.BaseShapelessOreRecipe;
+import net.thedragonteam.cct.compat.crafttweaker.CTCCTPlugin;
 import net.thedragonteam.cct.compat.crafttweaker.utils.AddUndoableAction;
 import net.thedragonteam.cct.compat.crafttweaker.utils.RemoveUndoableAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import static net.thedragonteam.cct.CustomCraftingTables.MODID;
-import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toFiveByFiveShapedObjects;
+import java.util.List;
+
+import static net.thedragonteam.cct.compat.crafttweaker.CTCCTPlugin.toFiveByFiveShapedObjects;
 import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toObjects;
 import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toStack;
 
-@ZenClass("mods." + MODID + ".FiveByFive")
+@ZenClass("mods.cct.FiveByFive")
 public class FiveByFive {
 
     @ZenMethod
     public static void addShapeless(IItemStack output, IIngredient[] ingredients) {
-        MineTweakerAPI.apply(new Add(new ShapelessOreRecipe(toStack(output), toObjects(ingredients))));
+        CraftTweakerAPI.apply(new Add(new BaseShapelessOreRecipe(toStack(output), toObjects(ingredients))));
     }
 
     @ZenMethod
     public static void addShaped(IItemStack output, IIngredient[][] ingredients) {
-        MineTweakerAPI.apply(new Add(new ShapedOreRecipe(toStack(output), toFiveByFiveShapedObjects(ingredients))));
+        CraftTweakerAPI.apply(new Add(new BaseShapedOreRecipe(5, toStack(output), toFiveByFiveShapedObjects(ingredients))));
     }
 
     @ZenMethod
     public static void remove(IItemStack target) {
-        MineTweakerAPI.apply(new Remove(toStack(target)));
+        CraftTweakerAPI.apply(new Remove(toStack(target)));
     }
 
     private static class Add extends AddUndoableAction {
@@ -50,21 +52,13 @@ public class FiveByFive {
 
         @Override
         public void apply() {
-            FiveByFiveManager.getInstance().getRecipeList().add(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
+            BaseCraftingManager.getFiveByFive().getRecipeList().add(recipe);
         }
-
-        @Override
-        public void undo() {
-            FiveByFiveManager.getInstance().getRecipeList().remove(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
-        }
-
     }
 
     private static class Remove extends RemoveUndoableAction {
-        IRecipe recipe = null;
         ItemStack remove;
+        List<IRecipe> recipeList = BaseCraftingManager.getFiveByFive().getRecipeList();
 
         public Remove(ItemStack remove) {
             super(remove, 5);
@@ -73,25 +67,7 @@ public class FiveByFive {
 
         @Override
         public void apply() {
-
-            for (Object obj : FiveByFiveManager.getInstance().getRecipeList()) {
-                if (obj instanceof IRecipe) {
-                    IRecipe craft = (IRecipe) obj;
-                    if (craft.getRecipeOutput().isItemEqual(remove)) {
-                        recipe = craft;
-                        FiveByFiveManager.getInstance().getRecipeList().remove(obj);
-                        MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
-                        break;
-                    }
-                }
-            }
+            CTCCTPlugin.removeRecipe(recipeList, remove);
         }
-
-        @Override
-        public void undo() {
-            FiveByFiveManager.getInstance().getRecipeList().add(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
-        }
-
     }
 }

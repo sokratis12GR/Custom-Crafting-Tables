@@ -4,31 +4,27 @@
 
 package net.thedragonteam.cct.compat.jei;
 
-import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
-import net.thedragonteam.cct.api.crafting.cct_10x10.TenByTenManager;
-import net.thedragonteam.cct.api.crafting.cct_3x3.ThreeByThreeManager;
-import net.thedragonteam.cct.api.crafting.cct_4x4.FourByFourManager;
-import net.thedragonteam.cct.api.crafting.cct_5x5.FiveByFiveManager;
-import net.thedragonteam.cct.api.crafting.cct_6x6.SixBySixManager;
-import net.thedragonteam.cct.api.crafting.cct_7x7.SevenBySevenManager;
-import net.thedragonteam.cct.api.crafting.cct_8x8.EightByEightManager;
-import net.thedragonteam.cct.api.crafting.cct_9x9.NineByNineManager;
+import net.thedragonteam.cct.api.crafting.base.*;
 import net.thedragonteam.cct.client.gui.*;
 import net.thedragonteam.cct.compat.jei.base.*;
 import net.thedragonteam.cct.container.*;
 import net.thedragonteam.cct.container.base.AdvancedRecipeTransferInfo;
 import net.thedragonteam.cct.registry.ModBlocks;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 import static net.thedragonteam.cct.util.Utils.setLocation;
 import static net.thedragonteam.thedragonlib.util.ItemStackUtils.getItemStack;
 
 @JEIPlugin
-public class CCTPlugin extends BlankModPlugin {
+public class CCTPlugin implements IModPlugin {
 
     private static final String JEI_CATEGORY_3X3 = setLocation("3x3");
     private static final String JEI_CATEGORY_4X4 = setLocation("4x4");
@@ -47,61 +43,24 @@ public class CCTPlugin extends BlankModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registry) {
         jeiHelper = registry.getJeiHelpers();
         registry.addRecipeCategories(
-                new CategoryBase(29, 16, 116, 54, 94, 18, 3, JEI_CATEGORY_3X3),
-                new CategoryBase(11, 16, 136, 70, 113, 26, 4, JEI_CATEGORY_4X4),
-                new CategoryBase(11, 16, 156, 93, 136, 36, 5, JEI_CATEGORY_5X5),
-                new CategoryBase(11, 16, 158, 108, 138, 46, 6, JEI_CATEGORY_6X6),
-                new CategoryBaseAdvanced(11, 16, 178, 126, 156, 54, 7, JEI_CATEGORY_7X7, 160, 180),
-                new CategoryBaseAdvanced(11, 16, 201, 144, 180, 65, 8, JEI_CATEGORY_8X8, 180, 90),
-                new CategoryBaseAdvanced(11, 16, 200, 162, 178, 35, 9, JEI_CATEGORY_9X9, 185, 60),
-                new CategoryBaseAdvanced(38, 16, 213, 180, 190, 117, 10, JEI_CATEGORY_10X10, 194, 140)
+            new CategoryBase(29, 16, 116, 54, 94, 18, 3, JEI_CATEGORY_3X3),
+            new CategoryBase(11, 16, 136, 70, 113, 26, 4, JEI_CATEGORY_4X4),
+            new CategoryBase(11, 16, 156, 93, 136, 36, 5, JEI_CATEGORY_5X5),
+            new CategoryBase(11, 16, 158, 108, 138, 46, 6, JEI_CATEGORY_6X6),
+            new CategoryBaseAdvanced(11, 16, 178, 126, 156, 54, 7, JEI_CATEGORY_7X7, 160, 80),
+            new CategoryBaseAdvanced(11, 16, 144, 144, 63, 148, 8, JEI_CATEGORY_8X8, 90, 150),
+            new CategoryBaseAdvanced(11, 16, 162, 162, 72, 168, 9, JEI_CATEGORY_9X9, 100, 170),
+            new CategoryBaseAdvanced(38, 16, 180, 180, 81, 180, 10, JEI_CATEGORY_10X10, 110, 182)
         );
-        super.registerCategories(registry);
     }
 
     @Override
     public void register(IModRegistry registry) {
         jeiHelper = registry.getJeiHelpers();
 
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_3x3.ShapedRecipes.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_3X3);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_3x3.ShapelessRecipes.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), JEI_CATEGORY_3X3);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_3x3.ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(jeiHelper, recipe, recipe.getInput()), JEI_CATEGORY_3X3);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_3x3.ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(jeiHelper, recipe, recipe.getInput(), recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_3X3);
-
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_4x4.ShapedRecipes.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_4X4);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_4x4.ShapelessRecipes.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), JEI_CATEGORY_4X4);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_4x4.ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(jeiHelper, recipe, recipe.getInput()), JEI_CATEGORY_4X4);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_4x4.ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(jeiHelper, recipe, recipe.getInput(), recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_4X4);
-
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_5x5.ShapedRecipes.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_5X5);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_5x5.ShapelessRecipes.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), JEI_CATEGORY_5X5);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_5x5.ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(jeiHelper, recipe, recipe.getInput()), JEI_CATEGORY_5X5);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_5x5.ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(jeiHelper, recipe, recipe.getInput(), recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_5X5);
-
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_6x6.ShapedRecipes.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_6X6);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_6x6.ShapelessRecipes.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), JEI_CATEGORY_6X6);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_6x6.ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(jeiHelper, recipe, recipe.getInput()), JEI_CATEGORY_6X6);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_6x6.ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(jeiHelper, recipe, recipe.getInput(), recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_6X6);
-
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_7x7.ShapedRecipes.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_7X7);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_7x7.ShapelessRecipes.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), JEI_CATEGORY_7X7);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_7x7.ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(jeiHelper, recipe, recipe.getInput()), JEI_CATEGORY_7X7);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_7x7.ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(jeiHelper, recipe, recipe.getInput(), recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_7X7);
-
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_8x8.ShapedRecipes.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_8X8);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_8x8.ShapelessRecipes.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), JEI_CATEGORY_8X8);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_8x8.ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(jeiHelper, recipe, recipe.getInput()), JEI_CATEGORY_8X8);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_8x8.ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(jeiHelper, recipe, recipe.getInput(), recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_8X8);
-
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_9x9.ShapedRecipes.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_9X9);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_9x9.ShapelessRecipes.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), JEI_CATEGORY_9X9);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_9x9.ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(jeiHelper, recipe, recipe.getInput()), JEI_CATEGORY_9X9);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_9x9.ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(jeiHelper, recipe, recipe.getInput(), recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_9X9);
-
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_10x10.ShapedRecipes.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_10X10);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_10x10.ShapelessRecipes.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), JEI_CATEGORY_10X10);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_10x10.ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(jeiHelper, recipe, recipe.getInput()), JEI_CATEGORY_10X10);
-        registry.handleRecipes(net.thedragonteam.cct.api.crafting.cct_10x10.ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(jeiHelper, recipe, recipe.getInput(), recipe.getWidth(), recipe.getHeight()), JEI_CATEGORY_10X10);
+        handleRecipes(registry,
+            JEI_CATEGORY_3X3, JEI_CATEGORY_4X4, JEI_CATEGORY_5X5, JEI_CATEGORY_5X5, JEI_CATEGORY_6X6, JEI_CATEGORY_7X7, JEI_CATEGORY_8X8, JEI_CATEGORY_9X9, JEI_CATEGORY_10X10
+        );
 
         registry.addRecipeClickArea(GuiThreeByThree.class, 88, 32, 28, 23, JEI_CATEGORY_3X3);
         registry.addRecipeClickArea(GuiFourByFour.class, 88, 40, 28, 27, JEI_CATEGORY_4X4);
@@ -123,18 +82,26 @@ public class CCTPlugin extends BlankModPlugin {
         recipeTransferRegistry.addRecipeTransferHandler(new AdvancedRecipeTransferInfo<>(ContainerNineByNine.class, JEI_CATEGORY_9X9, 1, 81, 82, 36));
         recipeTransferRegistry.addRecipeTransferHandler(new AdvancedRecipeTransferInfo<>(ContainerTenByTen.class, JEI_CATEGORY_10X10, 1, 100, 101, 36, true, 4));
 
-        for (int i = 0; i < JEI_CATEGORIES.length; i++) {
-            registry.addRecipeCatalyst(getItemStack(ModBlocks.blockCCT[i + 2]), JEI_CATEGORIES[i]);
-        }
+        IntStream.range(0, JEI_CATEGORIES.length).forEachOrdered(i -> registry.addRecipeCatalyst(getItemStack(ModBlocks.blockCCT[i + 2]), JEI_CATEGORIES[i]));
 
-        registry.addRecipes(ThreeByThreeManager.getInstance().getRecipeList(), JEI_CATEGORY_3X3);
-        registry.addRecipes(FourByFourManager.getInstance().getRecipeList(), JEI_CATEGORY_4X4);
-        registry.addRecipes(FiveByFiveManager.getInstance().getRecipeList(), JEI_CATEGORY_5X5);
-        registry.addRecipes(SixBySixManager.getInstance().getRecipeList(), JEI_CATEGORY_6X6);
-        registry.addRecipes(SevenBySevenManager.getInstance().getRecipeList(), JEI_CATEGORY_7X7);
-        registry.addRecipes(EightByEightManager.getInstance().getRecipeList(), JEI_CATEGORY_8X8);
-        registry.addRecipes(NineByNineManager.getInstance().getRecipeList(), JEI_CATEGORY_9X9);
-        registry.addRecipes(TenByTenManager.getInstance().getRecipeList(), JEI_CATEGORY_10X10);
-        super.register(registry);
+        registry.addRecipes(BaseCraftingManager.getThreeByThree().getRecipeList(), JEI_CATEGORY_3X3);
+        registry.addRecipes(BaseCraftingManager.getFourByFour().getRecipeList(), JEI_CATEGORY_4X4);
+        registry.addRecipes(BaseCraftingManager.getFiveByFive().getRecipeList(), JEI_CATEGORY_5X5);
+        registry.addRecipes(BaseCraftingManager.getSixBySix().getRecipeList(), JEI_CATEGORY_6X6);
+        registry.addRecipes(BaseCraftingManager.getSevenBySeven().getRecipeList(), JEI_CATEGORY_7X7);
+        registry.addRecipes(BaseCraftingManager.getEightByEight().getRecipeList(), JEI_CATEGORY_8X8);
+        registry.addRecipes(BaseCraftingManager.getNineByNine().getRecipeList(), JEI_CATEGORY_9X9);
+        registry.addRecipes(BaseCraftingManager.getTenByTen().getRecipeList(), JEI_CATEGORY_10X10);
+    }
+
+    private void handleRecipes(IModRegistry registry, String category) {
+        registry.handleRecipes(BaseShapedRecipe.class, recipe -> new ShapedRecipeWrapper(recipe, recipe.input, recipe.getWidth(), recipe.getHeight()), category);
+        registry.handleRecipes(BaseShapelessRecipe.class, recipe -> new ShapelessRecipeWrapper(recipe, recipe.input), category);
+        registry.handleRecipes(BaseShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(jeiHelper, recipe, recipe.getInput()), category);
+        registry.handleRecipes(BaseShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(jeiHelper, recipe, recipe.getInput(), recipe.getWidth(), recipe.getHeight()), category);
+    }
+
+    private void handleRecipes(IModRegistry registry, String... categories) {
+        Arrays.stream(categories).forEach(category -> handleRecipes(registry, category));
     }
 }

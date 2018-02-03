@@ -4,27 +4,30 @@
 
 package net.thedragonteam.cct.compat.crafttweaker;
 
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IIngredient;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IIngredient;
+import net.minecraft.item.ItemStack;
+import net.thedragonteam.cct.api.crafting.IRecipe;
 import net.thedragonteam.cct.compat.crafttweaker.tables.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toObject;
 
-public class MTCCTPlugin {
+public class CTCCTPlugin {
 
     public static void init() {
-        MineTweakerAPI.registerClass(OneByOne.class);
-        MineTweakerAPI.registerClass(TwoByTwo.class);
-        MineTweakerAPI.registerClass(ThreeByThree.class);
-        MineTweakerAPI.registerClass(FourByFour.class);
-        MineTweakerAPI.registerClass(FiveByFive.class);
-        MineTweakerAPI.registerClass(SixBySix.class);
-        MineTweakerAPI.registerClass(SevenBySeven.class);
-        MineTweakerAPI.registerClass(EightByEight.class);
-        MineTweakerAPI.registerClass(NineByNine.class);
-        MineTweakerAPI.registerClass(TenByTen.class);
+        CraftTweakerAPI.registerClass(OneByOne.class);
+        CraftTweakerAPI.registerClass(TwoByTwo.class);
+        CraftTweakerAPI.registerClass(ThreeByThree.class);
+        CraftTweakerAPI.registerClass(FourByFour.class);
+        CraftTweakerAPI.registerClass(FiveByFive.class);
+        CraftTweakerAPI.registerClass(SixBySix.class);
+        CraftTweakerAPI.registerClass(SevenBySeven.class);
+        CraftTweakerAPI.registerClass(EightByEight.class);
+        CraftTweakerAPI.registerClass(NineByNine.class);
+        CraftTweakerAPI.registerClass(TenByTen.class);
     }
 
     public static Object[] toTwoByTwoObjects(IIngredient[][] ingredients) {
@@ -33,8 +36,8 @@ public class MTCCTPlugin {
         prep.add("ab");
         prep.add("cd");
         char[][] map = new char[][]{
-                {'a', 'b'},
-                {'c', 'd'}
+            {'a', 'b'},
+            {'c', 'd'}
         };
         toShapedObjects(ingredients, map, prep);
         return prep.toArray();
@@ -47,9 +50,9 @@ public class MTCCTPlugin {
         prep.add("def");
         prep.add("ghi");
         char[][] map = new char[][]{
-                {'a', 'b', 'c'},
-                {'d', 'e', 'f'},
-                {'g', 'h', 'i'}
+            {'a', 'b', 'c'},
+            {'d', 'e', 'f'},
+            {'g', 'h', 'i'}
         };
         toShapedObjects(ingredients, map, prep);
         return prep.toArray();
@@ -63,10 +66,10 @@ public class MTCCTPlugin {
         prep.add("ijkl");
         prep.add("mnop");
         char[][] map = new char[][]{
-                {'a', 'b', 'c', 'd'},
-                {'e', 'f', 'g', 'h'},
-                {'i', 'j', 'k', 'l'},
-                {'m', 'n', 'o', 'p'}
+            {'a', 'b', 'c', 'd'},
+            {'e', 'f', 'g', 'h'},
+            {'i', 'j', 'k', 'l'},
+            {'m', 'n', 'o', 'p'}
         };
         toShapedObjects(ingredients, map, prep);
         return prep.toArray();
@@ -81,11 +84,11 @@ public class MTCCTPlugin {
         prep.add("pqrst");
         prep.add("uvwxy");
         char[][] map = new char[][]{
-                {'a', 'b', 'c', 'd', 'e'},
-                {'f', 'g', 'h', 'i', 'j'},
-                {'k', 'l', 'm', 'n', 'o'},
-                {'p', 'q', 'r', 's', 't'},
-                {'u', 'v', 'w', 'x', 'y'}
+            {'a', 'b', 'c', 'd', 'e'},
+            {'f', 'g', 'h', 'i', 'j'},
+            {'k', 'l', 'm', 'n', 'o'},
+            {'p', 'q', 'r', 's', 't'},
+            {'u', 'v', 'w', 'x', 'y'}
         };
         toShapedObjects(ingredients, map, prep);
         return prep.toArray();
@@ -101,12 +104,12 @@ public class MTCCTPlugin {
         prep.add("yzABCD");
         prep.add("EFGHIJ");
         char[][] map = new char[][]{
-                {'a', 'b', 'c', 'd', 'e', 'f'},
-                {'g', 'h', 'i', 'j', 'k', 'l'},
-                {'m', 'n', 'o', 'p', 'q', 'r'},
-                {'s', 't', 'u', 'v', 'w', 'x'},
-                {'y', 'z', 'A', 'B', 'C', 'D'},
-                {'E', 'F', 'G', 'H', 'I', 'J'}
+            {'a', 'b', 'c', 'd', 'e', 'f'},
+            {'g', 'h', 'i', 'j', 'k', 'l'},
+            {'m', 'n', 'o', 'p', 'q', 'r'},
+            {'s', 't', 'u', 'v', 'w', 'x'},
+            {'y', 'z', 'A', 'B', 'C', 'D'},
+            {'E', 'F', 'G', 'H', 'I', 'J'}
         };
         toShapedObjects(ingredients, map, prep);
         return prep.toArray();
@@ -123,13 +126,13 @@ public class MTCCTPlugin {
         prep.add("JKLMNOP");
         prep.add("QRSTUVW");
         char[][] map = new char[][]{
-                {'a', 'b', 'c', 'd', 'e', 'f', 'g'},
-                {'h', 'i', 'j', 'k', 'l', 'm', 'n'},
-                {'o', 'p', 'q', 'r', 's', 't', 'u'},
-                {'v', 'w', 'x', 'y', 'z', 'A', 'B'},
-                {'C', 'D', 'E', 'F', 'G', 'H', 'I'},
-                {'J', 'K', 'L', 'M', 'N', 'O', 'P'},
-                {'Q', 'R', 'S', 'T', 'U', 'V', 'W'}
+            {'a', 'b', 'c', 'd', 'e', 'f', 'g'},
+            {'h', 'i', 'j', 'k', 'l', 'm', 'n'},
+            {'o', 'p', 'q', 'r', 's', 't', 'u'},
+            {'v', 'w', 'x', 'y', 'z', 'A', 'B'},
+            {'C', 'D', 'E', 'F', 'G', 'H', 'I'},
+            {'J', 'K', 'L', 'M', 'N', 'O', 'P'},
+            {'Q', 'R', 'S', 'T', 'U', 'V', 'W'}
         };
         toShapedObjects(ingredients, map, prep);
         return prep.toArray();
@@ -147,14 +150,14 @@ public class MTCCTPlugin {
         prep.add("WXYZ1234");
         prep.add("567890!@");
         char[][] map = new char[][]{
-                {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'},
-                {'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'},
-                {'q', 'r', 's', 't', 'u', 'v', 'w', 'x'},
-                {'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F'},
-                {'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'},
-                {'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'},
-                {'W', 'X', 'Y', 'Z', '1', '2', '3', '4'},
-                {'5', '6', '7', '8', '9', '0', '!', '@'}
+            {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'},
+            {'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'},
+            {'q', 'r', 's', 't', 'u', 'v', 'w', 'x'},
+            {'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F'},
+            {'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'},
+            {'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'},
+            {'W', 'X', 'Y', 'Z', '1', '2', '3', '4'},
+            {'5', '6', '7', '8', '9', '0', '!', '@'}
         };
         toShapedObjects(ingredients, map, prep);
         return prep.toArray();
@@ -173,15 +176,15 @@ public class MTCCTPlugin {
         prep.add("@#$%^&*()");
         prep.add("-=_+`~|<>");
         char[][] map = new char[][]{
-                {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'},
-                {'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r'},
-                {'s', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A'},
-                {'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'},
-                {'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'},
-                {'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2'},
-                {'3', '4', '5', '6', '7', '8', '9', '0', '!'},
-                {'@', '#', '$', '%', '^', '&', '*', '(', ')'},
-                {'-', '=', '_', '+', '`', '~', '|', '<', '>'}
+            {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'},
+            {'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r'},
+            {'s', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A'},
+            {'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'},
+            {'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'},
+            {'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2'},
+            {'3', '4', '5', '6', '7', '8', '9', '0', '!'},
+            {'@', '#', '$', '%', '^', '&', '*', '(', ')'},
+            {'-', '=', '_', '+', '`', '~', '|', '<', '>'}
         };
         toShapedObjects(ingredients, map, prep);
         return prep.toArray();
@@ -201,16 +204,16 @@ public class MTCCTPlugin {
         prep.add("./\";:\'\\[]{");
         prep.add("}?óβγδεζηθ");
         char[][] map = new char[][]{
-                {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'},
-                {'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't'},
-                {'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D'},
-                {'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'},
-                {'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X'},
-                {'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8'},
-                {'9', '0', '!', '@', '#', '$', '%', '^', '&', '*'},
-                {'(', ')', '-', '+', '`', '~', '|', '<', '>', ','},
-                {'.', '/', '\"', ';', ':', '\'', '\\', '[', ']', '{'},
-                {'}', '?', 'ó', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ'}
+            {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'},
+            {'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't'},
+            {'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D'},
+            {'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'},
+            {'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X'},
+            {'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8'},
+            {'9', '0', '!', '@', '#', '$', '%', '^', '&', '*'},
+            {'(', ')', '-', '+', '`', '~', '|', '<', '>', ','},
+            {'.', '/', '\"', ';', ':', '\'', '\\', '[', ']', '{'},
+            {'}', '?', 'ó', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ'}
         };
         toShapedObjects(ingredients, map, prep);
         return prep.toArray();
@@ -229,5 +232,16 @@ public class MTCCTPlugin {
         }
     }
 
+    public static void removeRecipe(List<IRecipe> recipes, ItemStack remove) {
+        for (Object obj : recipes) {
+            if (obj instanceof IRecipe) {
+                IRecipe craft = (IRecipe) obj;
+                if (craft.getRecipeOutput().isItemEqual(remove)) {
+                    recipes.remove(obj);
+                    break;
+                }
+            }
+        }
+    }
 
 }

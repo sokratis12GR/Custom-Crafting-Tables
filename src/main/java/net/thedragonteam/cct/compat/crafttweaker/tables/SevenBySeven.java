@@ -4,40 +4,42 @@
 
 package net.thedragonteam.cct.compat.crafttweaker.tables;
 
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.thedragonteam.cct.api.crafting.cct_7x7.SevenBySevenManager;
-import net.thedragonteam.cct.api.crafting.cct_7x7.ShapedOreRecipe;
-import net.thedragonteam.cct.api.crafting.cct_7x7.ShapelessOreRecipe;
+import net.thedragonteam.cct.api.crafting.IRecipe;
+import net.thedragonteam.cct.api.crafting.base.BaseCraftingManager;
+import net.thedragonteam.cct.api.crafting.base.BaseShapedOreRecipe;
+import net.thedragonteam.cct.api.crafting.base.BaseShapelessOreRecipe;
+import net.thedragonteam.cct.compat.crafttweaker.CTCCTPlugin;
 import net.thedragonteam.cct.compat.crafttweaker.utils.AddUndoableAction;
 import net.thedragonteam.cct.compat.crafttweaker.utils.RemoveUndoableAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import static net.thedragonteam.cct.CustomCraftingTables.MODID;
-import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toSevenBySevenObjects;
+import java.util.List;
+
+import static net.thedragonteam.cct.compat.crafttweaker.CTCCTPlugin.toSevenBySevenObjects;
 import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toObjects;
 import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toStack;
 
-@ZenClass("mods." + MODID + ".SevenBySeven")
+@ZenClass("mods.cct.SevenBySeven")
 public class SevenBySeven {
 
     @ZenMethod
     public static void addShapeless(IItemStack output, IIngredient[] ingredients) {
-        MineTweakerAPI.apply(new Add(new ShapelessOreRecipe(toStack(output), toObjects(ingredients))));
+        CraftTweakerAPI.apply(new Add(new BaseShapelessOreRecipe(toStack(output), toObjects(ingredients))));
     }
 
     @ZenMethod
     public static void addShaped(IItemStack output, IIngredient[][] ingredients) {
-        MineTweakerAPI.apply(new Add(new ShapedOreRecipe(toStack(output), toSevenBySevenObjects(ingredients))));
+        CraftTweakerAPI.apply(new Add(new BaseShapedOreRecipe(7, toStack(output), toSevenBySevenObjects(ingredients))));
     }
 
     @ZenMethod
     public static void remove(IItemStack target) {
-        MineTweakerAPI.apply(new Remove(toStack(target)));
+        CraftTweakerAPI.apply(new Remove(toStack(target)));
     }
 
     private static class Add extends AddUndoableAction {
@@ -50,21 +52,13 @@ public class SevenBySeven {
 
         @Override
         public void apply() {
-            SevenBySevenManager.getInstance().getRecipeList().add(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
+            BaseCraftingManager.getSevenBySeven().getRecipeList().add(recipe);
         }
-
-        @Override
-        public void undo() {
-            SevenBySevenManager.getInstance().getRecipeList().remove(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
-        }
-
     }
 
     private static class Remove extends RemoveUndoableAction {
-        IRecipe recipe = null;
         ItemStack remove;
+        List<IRecipe> recipeList = BaseCraftingManager.getSevenBySeven().getRecipeList();
 
         public Remove(ItemStack remove) {
             super(remove, 7);
@@ -73,25 +67,7 @@ public class SevenBySeven {
 
         @Override
         public void apply() {
-
-            for (Object obj : SevenBySevenManager.getInstance().getRecipeList()) {
-                if (obj instanceof IRecipe) {
-                    IRecipe craft = (IRecipe) obj;
-                    if (craft.getRecipeOutput().isItemEqual(remove)) {
-                        recipe = craft;
-                        SevenBySevenManager.getInstance().getRecipeList().remove(obj);
-                        MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
-                        break;
-                    }
-                }
-            }
+            CTCCTPlugin.removeRecipe(recipeList, remove);
         }
-
-        @Override
-        public void undo() {
-            SevenBySevenManager.getInstance().getRecipeList().add(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
-        }
-
     }
 }

@@ -1,14 +1,14 @@
 package net.thedragonteam.cct.compat.crafttweaker.utils;
 
-import minetweaker.IUndoableAction;
-import net.minecraft.item.crafting.IRecipe;
+import crafttweaker.IAction;
+import net.thedragonteam.cct.api.crafting.IRecipe;
 
 import static java.lang.String.format;
 
 /**
  * Created by sokratis12GR on 6/10/2017.
  */
-public abstract class AddUndoableAction implements IUndoableAction {
+public abstract class AddUndoableAction implements IAction {
 
     private IRecipe recipe;
     private String xy;
@@ -21,20 +21,5 @@ public abstract class AddUndoableAction implements IUndoableAction {
     @Override
     public String describe() {
         return format("Adding %s Recipe for %s", xy, recipe.getRecipeOutput().getDisplayName());
-    }
-
-    @Override
-    public String describeUndo() {
-        return format("Un-adding %s for %s", xy, recipe.getRecipeOutput().getDisplayName());
-    }
-
-    @Override
-    public boolean canUndo() {
-        return true;
-    }
-
-    @Override
-    public Object getOverrideKey() {
-        return null;
     }
 }

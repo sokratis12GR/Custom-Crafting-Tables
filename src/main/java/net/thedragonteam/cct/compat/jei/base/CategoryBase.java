@@ -8,7 +8,7 @@ import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeCategory;
+import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.util.ResourceLocation;
 import net.thedragonteam.cct.CustomCraftingTables;
@@ -16,7 +16,6 @@ import net.thedragonteam.cct.compat.jei.CCTPlugin;
 import net.thedragonteam.cct.compat.jei.JEIUtils;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Objects;
 
 import static java.lang.String.format;
@@ -24,7 +23,7 @@ import static net.thedragonteam.cct.CCTConfig.cctJEINames;
 import static net.thedragonteam.cct.util.Utils.getFormatted;
 import static net.thedragonteam.cct.util.Utils.setRL;
 
-public class CategoryBase extends BlankRecipeCategory<IRecipeWrapper> {
+public class CategoryBase implements IRecipeCategory {
 
     private static final int OUTPUT_SLOT = 0;
     private static final int INPUT_SLOT = 1;
@@ -75,12 +74,6 @@ public class CategoryBase extends BlankRecipeCategory<IRecipeWrapper> {
     @Override
     public IDrawable getBackground() {
         return background;
-    }
-
-    @Nullable
-    @Override
-    public IDrawable getIcon() {
-        return null;
     }
 
     @Override

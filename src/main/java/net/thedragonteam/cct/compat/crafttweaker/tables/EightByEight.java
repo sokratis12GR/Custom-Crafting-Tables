@@ -4,40 +4,42 @@
 
 package net.thedragonteam.cct.compat.crafttweaker.tables;
 
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.thedragonteam.cct.api.crafting.cct_8x8.EightByEightManager;
-import net.thedragonteam.cct.api.crafting.cct_8x8.ShapedOreRecipe;
-import net.thedragonteam.cct.api.crafting.cct_8x8.ShapelessOreRecipe;
+import net.thedragonteam.cct.api.crafting.IRecipe;
+import net.thedragonteam.cct.api.crafting.base.BaseCraftingManager;
+import net.thedragonteam.cct.api.crafting.base.BaseShapedOreRecipe;
+import net.thedragonteam.cct.api.crafting.base.BaseShapelessOreRecipe;
+import net.thedragonteam.cct.compat.crafttweaker.CTCCTPlugin;
 import net.thedragonteam.cct.compat.crafttweaker.utils.AddUndoableAction;
 import net.thedragonteam.cct.compat.crafttweaker.utils.RemoveUndoableAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import static net.thedragonteam.cct.CustomCraftingTables.MODID;
-import static net.thedragonteam.cct.compat.crafttweaker.MTCCTPlugin.toEightByEightObjects;
+import java.util.List;
+
+import static net.thedragonteam.cct.compat.crafttweaker.CTCCTPlugin.toEightByEightObjects;
 import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toObjects;
 import static net.thedragonteam.cct.compat.crafttweaker.utils.MTUtils.toStack;
 
-@ZenClass("mods." + MODID + ".EightByEight")
+@ZenClass("mods.cct.EightByEight")
 public class EightByEight {
 
     @ZenMethod
     public static void addShapeless(IItemStack output, IIngredient[] ingredients) {
-        MineTweakerAPI.apply(new Add(new ShapelessOreRecipe(toStack(output), toObjects(ingredients))));
+        CraftTweakerAPI.apply(new Add(new BaseShapelessOreRecipe(toStack(output), toObjects(ingredients))));
     }
 
     @ZenMethod
     public static void addShaped(IItemStack output, IIngredient[][] ingredients) {
-        MineTweakerAPI.apply(new Add(new ShapedOreRecipe(toStack(output), toEightByEightObjects(ingredients))));
+        CraftTweakerAPI.apply(new Add(new BaseShapedOreRecipe(8, toStack(output), toEightByEightObjects(ingredients))));
     }
 
     @ZenMethod
     public static void remove(IItemStack target) {
-        MineTweakerAPI.apply(new Remove(toStack(target)));
+        CraftTweakerAPI.apply(new Remove(toStack(target)));
     }
 
     private static class Add extends AddUndoableAction {
@@ -50,21 +52,13 @@ public class EightByEight {
 
         @Override
         public void apply() {
-            EightByEightManager.getInstance().getRecipeList().add(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
+            BaseCraftingManager.getEightByEight().getRecipeList().add(recipe);
         }
-
-        @Override
-        public void undo() {
-            EightByEightManager.getInstance().getRecipeList().remove(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
-        }
-
     }
 
     private static class Remove extends RemoveUndoableAction {
-        IRecipe recipe = null;
         ItemStack remove;
+        List<IRecipe> recipeList = BaseCraftingManager.getEightByEight().getRecipeList();
 
         public Remove(ItemStack remove) {
             super(remove, 8);
@@ -73,25 +67,7 @@ public class EightByEight {
 
         @Override
         public void apply() {
-
-            for (Object obj : EightByEightManager.getInstance().getRecipeList()) {
-                if (obj instanceof IRecipe) {
-                    IRecipe craft = (IRecipe) obj;
-                    if (craft.getRecipeOutput().isItemEqual(remove)) {
-                        recipe = craft;
-                        EightByEightManager.getInstance().getRecipeList().remove(obj);
-                        MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
-                        break;
-                    }
-                }
-            }
+            CTCCTPlugin.removeRecipe(recipeList, remove);
         }
-
-        @Override
-        public void undo() {
-            EightByEightManager.getInstance().getRecipeList().add(recipe);
-            MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
-        }
-
     }
 }

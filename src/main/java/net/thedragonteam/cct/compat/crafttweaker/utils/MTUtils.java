@@ -1,8 +1,8 @@
 package net.thedragonteam.cct.compat.crafttweaker.utils;
 
-import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
-import minetweaker.api.oredict.IOreDictEntry;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
 import net.thedragonteam.thedragonlib.util.LogHelper;
 
@@ -30,7 +30,7 @@ public class MTUtils {
         if (iStack == null) return ItemStack.EMPTY;
         Object internal = iStack.getInternal();
         if (!(internal instanceof ItemStack)) {
-            LogHelper.INSTANCE.error("Not a valid item stack: " + iStack);
+            LogHelper.error("Not a valid item stack: " + iStack);
         }
         //noinspection ConstantConditions
         return (ItemStack) internal;
