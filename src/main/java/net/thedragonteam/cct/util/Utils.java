@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 
+import java.util.Objects;
+
 import static net.thedragonteam.cct.CustomCraftingTables.MODID;
 import static net.thedragonteam.cct.util.NBTHelper.checkNBT;
 
@@ -38,4 +40,33 @@ public final class Utils {
     public static String getFormatted(String key, Object... args) {
         return new TextComponentTranslation(key, args).getFormattedText();
     }
+
+    public static boolean isNotEmpty(ItemStack stack) {
+        return !stack.isEmpty();
+    }
+
+    public static boolean isEmpty(ItemStack stack) {
+        return stack.isEmpty();
+    }
+
+    public static boolean isNotNull(Object object) {
+        return object != null;
+    }
+
+    public static boolean areNotNull(Object object1, Object object2) {
+        return object1 != null && object2 != null;
+    }
+
+    public static boolean isNotNullNorEmpty(String object) {
+        return isNotNull(object) && !Objects.equals(object, "") && !Objects.equals(object, " ");
+    }
+
+    public static boolean isNull(Object object) {
+        return object == null;
+    }
+
+    public static boolean isNullOrEmpty(String object) {
+        return isNull(object) || Objects.equals(object, "");
+    }
+
 }
