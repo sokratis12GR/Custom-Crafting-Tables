@@ -6,10 +6,6 @@ package net.thedragonteam.cct.tileentity;
 
 import net.thedragonteam.cct.tileentity.base.TileEntityBaseBench;
 
-/**
- * ArmorPlus created by sokratis12GR
- * - TheDragonTeam
- */
 public class TileEntityNineByNine extends TileEntityBaseBench {
 
     public TileEntityNineByNine() {

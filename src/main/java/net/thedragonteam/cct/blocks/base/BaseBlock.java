@@ -9,11 +9,11 @@ import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thedragonteam.cct.CustomCraftingTables;
-import net.thedragonteam.cct.util.IModelHelper;
+import net.thedragonteam.cct.iface.IModdedBlock;
 
 import static net.thedragonteam.cct.util.Utils.setName;
 
-public class BaseBlock extends Block implements IModelHelper {
+public class BaseBlock extends Block implements IModdedBlock {
 
     public BaseBlock(Material material, String name) {
         this(material, name, 0F, 0F);
@@ -46,6 +46,6 @@ public class BaseBlock extends Block implements IModelHelper {
     @Override
     @SideOnly(Side.CLIENT)
     public void initModel() {
-        initModel(this, this.getRegistryName(), 0);
+        this.initModel(0);
     }
 }

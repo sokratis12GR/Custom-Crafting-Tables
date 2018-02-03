@@ -14,11 +14,7 @@ import java.util.Objects;
 
 import static net.thedragonteam.cct.CCTConfig.cctGuiNames;
 
-/**
- * net.thedragonteam.armorplus.client.gui
- * ArmorPlus created by sokratis12GR on 6/19/2016 10:37 AM.
- * - TheDragonTeam
- */
+
 public class GuiNineByNine extends GuiBaseBench {
 
     public GuiNineByNine(InventoryPlayer playerInv, TileEntityNineByNine tile) {

@@ -12,13 +12,8 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 
-/**
- * ArmorPlus created by sokratis12GR
- * - TheDragonTeam
- */
-public abstract class   TileEntityBase extends TileEntity {
+public abstract class TileEntityBase extends TileEntity {
 
-    private Object teslaWrapper;
 
     public TileEntityBase() {
     }

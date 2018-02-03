@@ -11,11 +11,13 @@ import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.thedragonteam.cct.api.crafting.cct_7x7.SevenBySevenManager;
-import net.thedragonteam.cct.api.crafting.cct_7x7.SlotCrafting;
+import net.thedragonteam.cct.api.crafting.base.BaseCraftingManager;
+import net.thedragonteam.cct.api.crafting.base.BaseSlotCrafting;
 import net.thedragonteam.cct.container.base.ContainerTableBase;
 import net.thedragonteam.cct.container.base.InventoryCraftingImproved;
 import net.thedragonteam.cct.tileentity.TileEntitySevenBySeven;
+
+import java.util.stream.IntStream;
 
 public class ContainerSevenBySeven extends ContainerTableBase {
 
@@ -33,7 +35,7 @@ public class ContainerSevenBySeven extends ContainerTableBase {
     public ContainerSevenBySeven(InventoryPlayer playerInventory, TileEntitySevenBySeven tile) {
         super(tile, RECIPE_SLOTS, MAIN_INVENTORY_SLOTS, FULL_INVENTORY_SLOTS);
         this.world = tile.getWorld();
-        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 168, 71));
+        this.addSlotToContainer(new BaseSlotCrafting(BaseCraftingManager.getSevenBySeven(),playerInventory.player, this.craftMatrix, this.craftResult, 0, 168, 71));
 
         for (int i = 0; i < RECIPE_SIZE; ++i)
             for (int j = 0; j < RECIPE_SIZE; ++j)
@@ -43,8 +45,7 @@ public class ContainerSevenBySeven extends ContainerTableBase {
             for (int i1 = 0; i1 < ROW_SLOTS; ++i1)
                 this.addSlotToContainer(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * ITEM_BOX, 156 + k * ITEM_BOX));
 
-        for (int l = 0; l < ROW_SLOTS; ++l)
-            this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * ITEM_BOX, 214));
+        IntStream.range(0, ROW_SLOTS).mapToObj(l -> new Slot(playerInventory, l, 8 + l * ITEM_BOX, 214)).forEachOrdered(this::addSlotToContainer);
 
         this.onCraftMatrixChanged(this.craftMatrix);
     }
@@ -54,7 +55,7 @@ public class ContainerSevenBySeven extends ContainerTableBase {
      */
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
-        this.craftResult.setInventorySlotContents(0, SevenBySevenManager.getInstance().findMatchingRecipe(this.craftMatrix, this.world));
+        this.craftResult.setInventorySlotContents(0, BaseCraftingManager.getSevenBySeven().findMatchingRecipe(this.craftMatrix, this.world));
     }
 
     /**

@@ -9,11 +9,7 @@ import net.thedragonteam.cct.client.gui.base.GuiBaseBench;
 import net.thedragonteam.cct.container.ContainerTwoByTwo;
 import net.thedragonteam.cct.tileentity.TileEntityTwoByTwo;
 
-/**
- * net.thedragonteam.armorplus.client.gui
- * ArmorPlus created by sokratis12GR on 6/19/2016 10:37 AM.
- * - TheDragonTeam
- */
+
 public class GuiTwoByTwo extends GuiBaseBench {
 
     public GuiTwoByTwo(InventoryPlayer playerInv, TileEntityTwoByTwo tile) {

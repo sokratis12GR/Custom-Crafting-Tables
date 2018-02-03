@@ -9,11 +9,7 @@ import net.thedragonteam.cct.client.gui.base.GuiBaseBench;
 import net.thedragonteam.cct.container.ContainerThreeByThree;
 import net.thedragonteam.cct.tileentity.TileEntityThreeByThree;
 
-/**
- * net.thedragonteam.armorplus.client.gui
- * ArmorPlus created by sokratis12GR on 6/19/2016 10:37 AM.
- * - TheDragonTeam
- */
+
 public class GuiThreeByThree extends GuiBaseBench {
 
     public GuiThreeByThree(InventoryPlayer playerInv, TileEntityThreeByThree tile) {

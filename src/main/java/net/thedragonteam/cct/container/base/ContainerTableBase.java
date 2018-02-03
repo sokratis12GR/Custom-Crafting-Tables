@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import java.util.stream.IntStream;
 
 public class ContainerTableBase extends ContainerBase {
 
@@ -81,12 +82,9 @@ public class ContainerTableBase extends ContainerBase {
 
     public static void onContainerClosed(EntityPlayer playerIn, boolean isRemote, int recipeSizeTotal, InventoryCraftingImproved removeItemStack) {
         if (!isRemote) {
-            for (int i = 0; i < recipeSizeTotal; ++i) {
-                ItemStack itemstack = removeItemStack.removeStackFromSlot(i);
-                if (!itemstack.isEmpty()) {
-                    playerIn.dropItem(itemstack, false);
-                }
-            }
+            IntStream.range(0, recipeSizeTotal).mapToObj(removeItemStack::removeStackFromSlot).filter(itemstack ->
+                    !itemstack.isEmpty()
+            ).forEachOrdered(itemstack -> playerIn.dropItem(itemstack, false));
         }
     }
 

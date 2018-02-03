@@ -12,11 +12,13 @@ import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.thedragonteam.cct.api.crafting.cct_10x10.SlotCrafting;
-import net.thedragonteam.cct.api.crafting.cct_10x10.TenByTenManager;
+import net.thedragonteam.cct.api.crafting.base.BaseCraftingManager;
+import net.thedragonteam.cct.api.crafting.base.BaseSlotCrafting;
 import net.thedragonteam.cct.container.base.ContainerTableBase;
 import net.thedragonteam.cct.container.base.InventoryCraftingImproved;
 import net.thedragonteam.cct.tileentity.TileEntityTenByTen;
+
+import java.util.stream.IntStream;
 
 public class ContainerTenByTen extends ContainerTableBase {
 
@@ -28,7 +30,7 @@ public class ContainerTenByTen extends ContainerTableBase {
     private static final int FULL_INVENTORY_SLOTS = RECIPE_SLOTS + 36;
     private static final int MAIN_INVENTORY_SLOTS = RECIPE_SLOTS + 27;
     private static final EntityEquipmentSlot[] EQUIPMENT_SLOTS = new EntityEquipmentSlot[]{
-            EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
+        EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET};
     private final World world;
     /**
      * The crafting matrix inventory (10x10).
@@ -40,7 +42,7 @@ public class ContainerTenByTen extends ContainerTableBase {
         super(tile, RECIPE_SLOTS, MAIN_INVENTORY_SLOTS, FULL_INVENTORY_SLOTS);
         this.world = tile.getWorld();
         //1x1 Output Inventory
-        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 230, 134));
+        this.addSlotToContainer(new BaseSlotCrafting(BaseCraftingManager.getTenByTen(), playerInventory.player, this.craftMatrix, this.craftResult, 0, 230, 134));
 
         //10x10 Crafting Inventory
         for (int i = 0; i < RECIPE_SIZE; ++i)
@@ -55,24 +57,23 @@ public class ContainerTenByTen extends ContainerTableBase {
                 this.addSlotToContainer(new Slot(playerInventory, i1 + k * 9 + 9, 48 + i1 * ITEM_BOX, 199 + k * ITEM_BOX));
 
         //1x9 HotBar Inventory
-        for (int l = 0; l < ROW_SLOTS; ++l)
-            this.addSlotToContainer(new Slot(playerInventory, l, 5, 17 + l * ITEM_BOX));
+        IntStream.range(0, ROW_SLOTS).mapToObj(l -> new Slot(playerInventory, l, 5, 17 + l * ITEM_BOX)).forEachOrdered(this::addSlotToContainer);
 
         this.onCraftMatrixChanged(this.craftMatrix);
     }
 
     private void addPlayerArmorInventoryTop(InventoryPlayer inventory, int xPos, int yPos) {
-        for (int k = 0; k < 2; ++k) {
+        IntStream.range(0, 2).forEachOrdered(k -> {
             EntityEquipmentSlot equipmentSlot = EQUIPMENT_SLOTS[k];
             addSlotToContainer(new SlotArmor(inventory, 4 * 9 + (3 - k), xPos + k * ITEM_BOX, yPos, inventory.player, equipmentSlot));
-        }
+        });
     }
 
     private void addPlayerArmorInventoryBot(InventoryPlayer inventory, int xPos, int yPos) {
-        for (int k = 0; k < 2; ++k) {
+        IntStream.range(0, 2).forEachOrdered(k -> {
             EntityEquipmentSlot equipmentSlot = EQUIPMENT_SLOTS[k + 2];
             addSlotToContainer(new SlotArmor(inventory, 4 * 9 + (3 - (k + 2)), xPos + k * ITEM_BOX, yPos, inventory.player, equipmentSlot));
-        }
+        });
     }
 
     /**
@@ -80,7 +81,7 @@ public class ContainerTenByTen extends ContainerTableBase {
      */
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
-        this.craftResult.setInventorySlotContents(0, TenByTenManager.getInstance().findMatchingRecipe(this.craftMatrix, this.world));
+        this.craftResult.setInventorySlotContents(0, BaseCraftingManager.getTenByTen().findMatchingRecipe(this.craftMatrix, this.world));
     }
 
     /**

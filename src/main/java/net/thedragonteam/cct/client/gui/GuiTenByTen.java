@@ -10,9 +10,8 @@ import net.thedragonteam.cct.client.gui.base.GuiBaseBench;
 import net.thedragonteam.cct.container.ContainerTenByTen;
 import net.thedragonteam.cct.tileentity.TileEntityTenByTen;
 
-import java.util.Objects;
-
 import static net.thedragonteam.cct.CCTConfig.cctGuiNames;
+import static net.thedragonteam.cct.util.Utils.isNotNullNorEmpty;
 
 public class GuiTenByTen extends GuiBaseBench {
 
@@ -25,6 +24,6 @@ public class GuiTenByTen extends GuiBaseBench {
      */
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString(cctGuiNames[9] != null && !Objects.equals(cctGuiNames[9], "") && !Objects.equals(cctGuiNames[9], " ") ? cctGuiNames[9] : new TextComponentTranslation("container.cct.10x10").getFormattedText(), 28, 5, 4210752);
+        this.fontRenderer.drawString(isNotNullNorEmpty(cctGuiNames[9]) ? cctGuiNames[9] : new TextComponentTranslation("container.cct.10x10").getFormattedText(), 28, 5, 4210752);
     }
 }

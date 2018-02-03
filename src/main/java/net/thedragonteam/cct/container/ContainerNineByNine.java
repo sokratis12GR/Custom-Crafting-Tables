@@ -11,11 +11,13 @@ import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.thedragonteam.cct.api.crafting.cct_9x9.NineByNineManager;
-import net.thedragonteam.cct.api.crafting.cct_9x9.SlotCrafting;
+import net.thedragonteam.cct.api.crafting.base.BaseCraftingManager;
+import net.thedragonteam.cct.api.crafting.base.BaseSlotCrafting;
 import net.thedragonteam.cct.container.base.ContainerTableBase;
 import net.thedragonteam.cct.container.base.InventoryCraftingImproved;
 import net.thedragonteam.cct.tileentity.TileEntityNineByNine;
+
+import java.util.stream.IntStream;
 
 public class ContainerNineByNine extends ContainerTableBase {
 
@@ -33,7 +35,7 @@ public class ContainerNineByNine extends ContainerTableBase {
     public ContainerNineByNine(InventoryPlayer playerInventory, TileEntityNineByNine tile) {
         super(tile, RECIPE_SLOTS, MAIN_INVENTORY_SLOTS, FULL_INVENTORY_SLOTS);
         this.world = tile.getWorld();
-        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 189, 51));
+        this.addSlotToContainer(new BaseSlotCrafting(BaseCraftingManager.getNineByNine(), playerInventory.player, this.craftMatrix, this.craftResult, 0, 189, 51));
 
         for (int i = 0; i < RECIPE_SIZE; ++i)
             for (int j = 0; j < RECIPE_SIZE; ++j)
@@ -43,8 +45,7 @@ public class ContainerNineByNine extends ContainerTableBase {
             for (int i1 = 0; i1 < ROW_SLOTS; ++i1)
                 this.addSlotToContainer(new Slot(playerInventory, i1 + k * 9 + 9, 12 + i1 * ITEM_BOX, 196 + k * ITEM_BOX));
 
-        for (int l = 0; l < ROW_SLOTS; ++l)
-            this.addSlotToContainer(new Slot(playerInventory, l, 228, 88 + l * ITEM_BOX));
+        IntStream.range(0, ROW_SLOTS).mapToObj(l -> new Slot(playerInventory, l, 228, 88 + l * ITEM_BOX)).forEachOrdered(this::addSlotToContainer);
 
         this.onCraftMatrixChanged(this.craftMatrix);
     }
@@ -54,7 +55,7 @@ public class ContainerNineByNine extends ContainerTableBase {
      */
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
-        this.craftResult.setInventorySlotContents(0, NineByNineManager.getInstance().findMatchingRecipe(this.craftMatrix, this.world));
+        this.craftResult.setInventorySlotContents(0,BaseCraftingManager.getNineByNine().findMatchingRecipe(this.craftMatrix, this.world));
     }
 
     /**

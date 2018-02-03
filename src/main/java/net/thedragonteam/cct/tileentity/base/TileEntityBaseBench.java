@@ -17,6 +17,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import java.util.stream.IntStream;
+
 import static java.lang.String.format;
 import static java.util.stream.IntStream.rangeClosed;
 
@@ -32,7 +34,7 @@ public class TileEntityBaseBench extends TileEntityInventoryBase {
     /**
      * the amount of itemHandler for the crafting grid
      */
-    public NonNullList<ItemStack> inventory = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
+    public NonNullList<ItemStack> inventory;
     public String customName;
 
     public TileEntityBaseBench(int size) {
@@ -77,14 +79,12 @@ public class TileEntityBaseBench extends TileEntityInventoryBase {
     @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         NBTTagList list = new NBTTagList();
-        for (int i = 0; i < this.inventorySize; ++i) {
-            if (!this.itemHandler.getStackInSlot(i).isEmpty()) {
-                NBTTagCompound stackTag = new NBTTagCompound();
-                stackTag.setByte("Slot", (byte) i);
-                this.itemHandler.getStackInSlot(i).writeToNBT(stackTag);
-                list.appendTag(stackTag);
-            }
-        }
+        IntStream.range(0, this.inventorySize).filter(i -> !this.itemHandler.getStackInSlot(i).isEmpty()).forEachOrdered(i -> {
+            NBTTagCompound stackTag = new NBTTagCompound();
+            stackTag.setByte("Slot", (byte) i);
+            this.itemHandler.getStackInSlot(i).writeToNBT(stackTag);
+            list.appendTag(stackTag);
+        });
         nbt.setTag("Items", list);
 
         if (this.hasCustomName()) nbt.setString("CustomName", this.getCustomName());
@@ -96,11 +96,10 @@ public class TileEntityBaseBench extends TileEntityInventoryBase {
         super.readFromNBT(nbt);
 
         NBTTagList list = nbt.getTagList("Items", 10);
-        for (int i = 0; i < list.tagCount(); ++i) {
-            NBTTagCompound stackTag = list.getCompoundTagAt(i);
+        IntStream.range(0, list.tagCount()).mapToObj(list::getCompoundTagAt).forEachOrdered(stackTag -> {
             int slot = stackTag.getByte("Slot") & 255;
             this.itemHandler.setStackInSlot(slot, new ItemStack(stackTag));
-        }
+        });
 
         if (nbt.hasKey("CustomName", 8)) this.setCustomName(nbt.getString("CustomName"));
     }

@@ -10,10 +10,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 
-import java.util.Objects;
-
 import static java.lang.String.format;
 import static net.thedragonteam.cct.CCTConfig.cctGuiNames;
+import static net.thedragonteam.cct.util.Utils.isNotNullNorEmpty;
 import static net.thedragonteam.cct.util.Utils.setRL;
 
 public class GuiBaseBench extends GuiContainer {
@@ -41,17 +40,26 @@ public class GuiBaseBench extends GuiContainer {
         this.guiNumber = guiNumber;
     }
 
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
+    @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString(cctGuiNames[guiNumber] != null && !Objects.equals(cctGuiNames[guiNumber], "") && !Objects.equals(cctGuiNames[guiNumber], " ") ? cctGuiNames[guiNumber] : new TextComponentTranslation("container.cct." + name).getFormattedText(), 28, 5, 4210752);
+        this.fontRenderer.drawString(isNotNullNorEmpty(cctGuiNames[guiNumber]) ? cctGuiNames[guiNumber] : new TextComponentTranslation("container.cct." + name).getFormattedText(), 28, 5, 4210752);
         this.fontRenderer.drawString(new TextComponentTranslation("container.cct.inventory").getFormattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
     /**
      * Draws the background layer of this container (behind the items).
      */
+    @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(resourceLocation);

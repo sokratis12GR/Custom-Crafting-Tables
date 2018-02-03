@@ -1,59 +1,53 @@
 package net.thedragonteam.cct.blocks;
 
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.thedragonteam.cct.blocks.base.BaseBlock;
 
-import static net.minecraftforge.common.util.EnumHelper.addRarity;
+import javax.annotation.Nullable;
+
 import static net.thedragonteam.cct.CustomCraftingTables.MODID;
-import static net.thedragonteam.cct.util.Utils.getFormatted;
 
-public class BlockCCT extends BaseBlock implements ITileEntityProvider {
-    private EnumCCT cct;
+public class BlockCCT extends BaseBlock {
+    public CCT cct;
+    private int blockNumber;
 
-    public BlockCCT(EnumCCT cctIn) {
+    public BlockCCT(CCT cctIn) {
         super(Material.WOOD, cctIn.getName());
-        this.cct = cctIn;
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this) {
-            @Override
-            public String getItemStackDisplayName(ItemStack stack) {
-                return cctIn.getDisplayName(getFormatted(this.getUnlocalizedNameInefficiently(stack) + ".name"));
-            }
-
-            @Override
-            public EnumRarity getRarity(ItemStack stack) {
-                return addRarity(cctIn.getName().toUpperCase(), cctIn.getColor(), cctIn.getDisplayName());
-            }
-
-            @Override
-            public int getItemStackLimit(ItemStack stack) {
-                return cctIn.getStackSize();
-            }
-        }, getRegistryName());
+        cct = cctIn;
+        blockNumber = cctIn.getBlockNumber();
     }
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (cct == cct.getCCT() && !worldIn.isRemote) {
-            playerIn.openGui(MODID, cct.getBlockNumber(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+        if (!worldIn.isRemote) {
+            playerIn.openGui(MODID, blockNumber, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
     }
 
+    public CCT getCct() {
+        return cct;
+    }
+
+    public int getBlockNumber() {
+        return blockNumber;
+    }
+
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
         return cct.getTileEntity();
     }
 }
