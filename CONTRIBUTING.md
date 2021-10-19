@@ -5,7 +5,7 @@ Formatting:
 
 Translations:
   - All translations must be made in the directory that's located inside `src/main/resources/assets/cct/lang/` and follow the respective format depending on the version they are being made for.
-  - File format is <country\_code>\_<accent\_iteration>.json
+  - File format is <country\_code>\_<accent\_iteration>.lang
   - **KEEP THE LEFT VALUES UNTOUCHED**.
   - Do **NOT** translate/remove `%s`, `%d` or any code operations.
 
