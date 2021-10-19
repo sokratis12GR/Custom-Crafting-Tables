@@ -1,4 +1,4 @@
 # Custom Crafting Tables (CCT)
 
-[![](http://cf.way2muchnoise.eu/full_custom-crafting-tables_downloads.svg)](http://minecraft.curseforge.com/projects/custom-crafting-tables)
-[![](http://cf.way2muchnoise.eu/versions/custom-crafting-tables.svg)](http://minecraft.curseforge.com/projects/custom-crafting-tables)
+[![](http://cf.way2muchnoise.eu/full_256411_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/cct)
+[![](http://cf.way2muchnoise.eu/versions/256411.svg)](https://www.curseforge.com/minecraft/mc-mods/cct)
